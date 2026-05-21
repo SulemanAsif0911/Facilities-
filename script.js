@@ -4,7 +4,7 @@
 // STEP 2: Paste your Web App URL below
 // ============================================================
 
-const GOOGLE_SCRIPT_URL = "https://sulemanasif0911.github.io/Facilities-/";
+const GOOGLE_SCRIPT_URL = "https://docs.google.com/spreadsheets/d/1S50xId4Vs2AaT-afQfDwnefBYg2tGOygpnYRxoeVQbY/edit?gid=0#gid=0";
 
 // ─────────────────────────────────────────────────────────────
 (() => {
