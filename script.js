@@ -4,7 +4,7 @@
 // STEP 2: Paste your Web App URL below
 // ============================================================
 
-const GOOGLE_SCRIPT_URL = "https://docs.google.com/spreadsheets/d/1S50xId4Vs2AaT-afQfDwnefBYg2tGOygpnYRxoeVQbY/edit?gid=0#gid=0";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHn66hYEIAx8gVh2MTiTdN6NJdvAi0zWhq6FKzdXHjruJDS6c6zOY0r7g1CdkRXR2M/exec";
 
 // ─────────────────────────────────────────────────────────────
 (() => {
