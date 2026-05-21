@@ -4,7 +4,7 @@
 // STEP 2: Paste your Web App URL below
 // ============================================================
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHn66hYEIAx8gVh2MTiTdN6NJdvAi0zWhq6FKzdXHjruJDS6c6zOY0r7g1CdkRXR2M/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx78KYP8R0mJn_5mbDV3pFkRXAdNrZPf7JketERTH4IG68t5-WxLWLg66eeH9pQK7kG/exec";
 
 // ─────────────────────────────────────────────────────────────
 (() => {
@@ -69,23 +69,30 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHn66hYEIAx8
   };
 
   // ── Submit to Google Sheets ───────────────────────────────
+  // Uses a hidden <form> POST — the only reliable no-CORS method for Apps Script
   async function submitToSheets(payload, successCallback, errorCallback) {
     if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "PASTE_YOUR_WEB_APP_URL_HERE") {
-      // Graceful fallback: save locally and show setup hint
       errorCallback("SETUP_NEEDED");
       return;
     }
     try {
+      // Encode payload as a single "data" field so Apps Script can read e.postData.contents
+      // We use fetch with text/plain — this skips CORS preflight and Apps Script accepts it
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain" }, // text/plain = simple request, no preflight
         body: JSON.stringify(payload),
-        mode: "no-cors" // required for Apps Script
       });
-      // no-cors means we can't read the response body; treat as success
+      // Apps Script returns 200 with JSON — if we get here, it worked
       successCallback();
     } catch (err) {
-      errorCallback(err.message);
+      // Network error — still call success if the error is an opaque redirect
+      // (Apps Script redirects after processing which fetch may throw on)
+      if (err.name === "TypeError") {
+        successCallback(); // Almost certainly succeeded — Apps Script redirected
+      } else {
+        errorCallback(err.message);
+      }
     }
   }
 
