@@ -1194,3 +1194,48 @@ body[data-language="ur"] .lang-ur {
     max-width: 100%;
   }
 }
+
+/* ── Additions: button loading state, submit feedback, WhatsApp channel ── */
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.button.primary:disabled,
+.button.ghost:disabled {
+  pointer-events: none;
+}
+
+/* Output box success/info tint */
+.output-box:not(:empty) {
+  border-color: rgba(34, 246, 255, 0.35);
+}
+
+/* WhatsApp channel button */
+.whatsapp-channel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+/* Lang button active state */
+.lang-button.is-active {
+  background: rgba(34, 246, 255, 0.15);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Ambassador textarea */
+#ambassadorWhy {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* Story result positive state */
+#storyResult,
+#ambassadorResult {
+  word-break: break-word;
+}
