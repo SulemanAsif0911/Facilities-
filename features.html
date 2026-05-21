@@ -515,11 +515,15 @@
                 <input id="ambassadorCity" type="text" placeholder="City" />
               </div>
               <div class="form-field">
-                <label for="ambassadorContact">Contact</label>
-                <input id="ambassadorContact" type="text" placeholder="Email or WhatsApp" />
+                <label for="ambassadorContact">Contact (Email or WhatsApp)</label>
+                <input id="ambassadorContact" type="text" placeholder="Email or WhatsApp number" />
               </div>
               <div class="form-field full">
-                <button class="button primary" type="submit">Save Ambassador Draft</button>
+                <label for="ambassadorWhy">Why do you want to join?</label>
+                <textarea id="ambassadorWhy" placeholder="Briefly tell us why you want to be a campus ambassador for Cyber Hayat PK."></textarea>
+              </div>
+              <div class="form-field full">
+                <button class="button primary" type="submit">Apply as Ambassador</button>
               </div>
               <div id="ambassadorResult" class="output-box form-field full" aria-live="polite">
                 Ambassador signup drafts appear here.
@@ -711,22 +715,19 @@
             </article>
             <article class="trust-card" id="whatsapp">
               <span class="trust-meta">WhatsApp</span>
-              <h3>Community Button</h3>
-              <p>Use this as a share button now. Replace the link with your real group or channel invite when ready.</p>
+              <h3>Join Our WhatsApp Channel</h3>
+              <p>Stay updated on cyber safety awareness, new threats, and community resources. Join the Cyber Hayat PK official channel.</p>
               <div class="whatsapp-panel">
-                <div class="form-field">
-                  <label for="whatsappMessage">Share message</label>
-                  <textarea id="whatsappMessage">Assalam o Alaikum, I want to join Cyber Hayat PK awareness updates.</textarea>
-                </div>
                 <a
-                  class="button primary"
-                  id="whatsappLink"
-                  href="https://wa.me/?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20join%20Cyber%20Hayat%20PK%20awareness%20updates."
+                  class="button primary whatsapp-channel-btn"
+                  id="whatsappChannelBtn"
+                  href="https://whatsapp.com/channel/0029Vb8nyrC4o7qUW8L3h23G"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open WhatsApp
+                  📢 Join WhatsApp Channel
                 </a>
+                <p style="margin-top:0.75rem;font-size:0.875rem;opacity:0.7;">Tapping the button opens WhatsApp directly to our channel.</p>
               </div>
             </article>
           </div>
