@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberHayatPK – Cyber Harassment Awareness</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+:root {
+  --cyan: #00e5ff;
+  --red: #ff2020;
+  --dark: #010d18;
+  --navy: #031522;
+  --mid: #062030;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  width:100%; height:100%;
+  background:#000;
+  overflow:hidden;
+  font-family:'Rajdhani', sans-serif;
+}
+
+/* ── CANVAS BG ── */
+#bgCanvas {
+  position:fixed; inset:0;
+  width:100%; height:100%;
+  z-index:0;
+}
+
+/* ── SCANLINES ── */
+.scanlines {
+  position:fixed; inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,229,255,0.015) 3px,rgba(0,229,255,0.015) 4px);
+  z-index:1; pointer-events:none;
+}
+
+/* ── VIGNETTE ── */
+.vignette {
+  position:fixed; inset:0;
+  background:radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.85) 100%);
+  z-index:1; pointer-events:none;
+}
+
+/* ── CORNER BRACKETS ── */
+.brackets { position:fixed; inset:0; z-index:3; pointer-events:none; }
+.brk { position:absolute; width:55px; height:55px; }
+.brk::before,.brk::after { content:''; position:absolute; background:var(--cyan); box-shadow:0 0 10px var(--cyan); }
+.brk.tl { top:18px; left:18px; }
+.brk.tl::before { width:3px; height:38px; top:0; left:0; }
+.brk.tl::after  { width:38px; height:3px; top:0; left:0; }
+.brk.tr { top:18px; right:18px; }
+.brk.tr::before { width:3px; height:38px; top:0; right:0; }
+.brk.tr::after  { width:38px; height:3px; top:0; right:0; }
+.brk.bl { bottom:18px; left:18px; }
+.brk.bl::before { width:3px; height:38px; bottom:0; left:0; }
+.brk.bl::after  { width:38px; height:3px; bottom:0; left:0; }
+.brk.br { bottom:18px; right:18px; }
+.brk.br::before { width:3px; height:38px; bottom:0; right:0; }
+.brk.br::after  { width:38px; height:3px; bottom:0; right:0; }
+
+/* ── PROGRESS BAR ── */
+#progressBar {
+  position:fixed; bottom:0; left:0; height:3px;
+  background:linear-gradient(90deg,var(--cyan),#0099bb);
+  box-shadow:0 0 12px var(--cyan);
+  z-index:10; transition:width 0.4s linear;
+  width:0%;
+}
+
+/* ── SLIDE COUNTER ── */
+#slideNum {
+  position:fixed; bottom:14px; right:22px;
+  font-family:'Orbitron', monospace;
+  font-size:11px; color:rgba(0,229,255,0.5);
+  z-index:10; letter-spacing:2px;
+}
+
+/* ── SCENES ── */
+.scene {
+  position:fixed; inset:0;
+  display:none;
+  align-items:center; justify-content:center;
+  flex-direction:column;
+  z-index:2;
+  pointer-events:none;
+}
+.scene.active {
+  display:flex;
+  pointer-events:all;
+  animation: sceneFadeIn 0.5s ease forwards;
+}
+@keyframes sceneFadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+/* ═══════════════════════════════
+   SCENE 1 – TITLE
+═══════════════════════════════ */
+#s1 .glitch-wrap {
+  text-align:center;
+  animation: fadeUp 0.8s ease forwards;
+}
+.title-tag {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(11px,1.4vw,15px);
+  color:var(--cyan);
+  letter-spacing:8px;
+  text-transform:uppercase;
+  opacity:0;
+  animation: fadeIn 0.6s 0.3s ease forwards;
+  margin-bottom:18px;
+}
+.main-title {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(38px,7vw,88px);
+  font-weight:900;
+  color:#fff;
+  line-height:1;
+  text-shadow:0 0 30px rgba(0,229,255,0.6), 0 0 80px rgba(0,229,255,0.2);
+  opacity:0;
+  animation: glitchReveal 1s 0.6s ease forwards;
+}
+.main-title span { color:var(--cyan); }
+.sub-title {
+  font-family:'Rajdhani', sans-serif;
+  font-size:clamp(16px,2.5vw,26px);
+  font-weight:600;
+  color:rgba(255,255,255,0.7);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  margin-top:14px;
+  opacity:0;
+  animation: fadeIn 0.8s 1.2s ease forwards;
+}
+.divider-line {
+  width:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  margin:22px auto;
+  animation: expandWidth 0.8s 1.5s ease forwards;
+}
+.tagline {
+  font-size:clamp(13px,1.6vw,17px);
+  color:rgba(0,229,255,0.8);
+  letter-spacing:5px;
+  text-transform:uppercase;
+  opacity:0;
+  animation: fadeIn 0.8s 2s ease forwards;
+}
+
+/* ═══════════════════════════════
+   SCENE 2 – WHAT IS CYBER HARASSMENT
+═══════════════════════════════ */
+#s2 { padding: 0 8vw; }
+.scene-label {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(9px,1.1vw,12px);
+  color:var(--red);
+  letter-spacing:6px;
+  text-transform:uppercase;
+  opacity:0;
+  animation: fadeIn 0.5s 0.2s ease forwards;
+  margin-bottom:16px;
+}
+.scene-heading {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(26px,4.5vw,56px);
+  font-weight:900;
+  color:#fff;
+  text-align:center;
+  line-height:1.1;
+  opacity:0;
+  animation: fadeUp 0.7s 0.4s ease forwards;
+  margin-bottom:20px;
+}
+.scene-heading .hl { color:var(--cyan); }
+.def-box {
+  max-width:780px;
+  text-align:center;
+  opacity:0;
+  animation: fadeUp 0.7s 0.8s ease forwards;
+}
+.def-box p {
+  font-size:clamp(14px,2vw,21px);
+  color:rgba(255,255,255,0.75);
+  line-height:1.7;
+  font-weight:400;
+}
+.def-box p strong { color:var(--cyan); font-weight:700; }
+
+/* ═══════════════════════════════
+   SCENE 3–8 – THREAT CARDS
+═══════════════════════════════ */
+.threat-scene { padding:0 6vw; }
+.threat-icon-wrap {
+  width:clamp(80px,12vw,130px);
+  height:clamp(80px,12vw,130px);
+  border-radius:50%;
+  border:2px solid var(--cyan);
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,229,255,0.05);
+  box-shadow:0 0 30px rgba(0,229,255,0.3), inset 0 0 30px rgba(0,229,255,0.05);
+  margin-bottom:28px;
+  opacity:0;
+  animation: popIn 0.6s 0.2s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+.threat-icon-wrap.red-icon {
+  border-color:var(--red);
+  background:rgba(255,32,32,0.05);
+  box-shadow:0 0 30px rgba(255,32,32,0.3), inset 0 0 30px rgba(255,32,32,0.05);
+}
+.threat-icon {
+  font-size:clamp(36px,5vw,58px);
+  filter:drop-shadow(0 0 8px currentColor);
+}
+.threat-name {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(24px,4vw,50px);
+  font-weight:900;
+  color:var(--cyan);
+  text-align:center;
+  text-shadow:0 0 20px rgba(0,229,255,0.5);
+  opacity:0;
+  animation: fadeUp 0.6s 0.5s ease forwards;
+  margin-bottom:16px;
+}
+.threat-name.danger { color:var(--red); text-shadow:0 0 20px rgba(255,32,32,0.5); }
+.threat-desc {
+  max-width:700px;
+  text-align:center;
+  font-size:clamp(14px,2vw,21px);
+  color:rgba(255,255,255,0.72);
+  line-height:1.7;
+  opacity:0;
+  animation: fadeUp 0.6s 0.8s ease forwards;
+}
+.threat-desc strong { color:var(--cyan); }
+.threat-desc strong.r { color:var(--red); }
+
+.protect-strip {
+  margin-top:28px;
+  padding:14px 28px;
+  border:1px solid rgba(0,229,255,0.25);
+  border-left:3px solid var(--cyan);
+  background:rgba(0,229,255,0.04);
+  max-width:680px;
+  text-align:left;
+  opacity:0;
+  animation: fadeIn 0.6s 1.1s ease forwards;
+  border-radius:0 6px 6px 0;
+}
+.protect-strip .pt-label {
+  font-family:'Orbitron', monospace;
+  font-size:10px;
+  color:var(--cyan);
+  letter-spacing:4px;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+.protect-strip p {
+  font-size:clamp(13px,1.6vw,16px);
+  color:rgba(255,255,255,0.65);
+  line-height:1.6;
+}
+
+/* ═══════════════════════════════
+   SCENE 9 – STATS
+═══════════════════════════════ */
+#s9 { padding:0 6vw; }
+.stats-grid {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:clamp(14px,2vw,28px);
+  max-width:900px;
+  width:100%;
+  margin-top:24px;
+}
+.stat-card {
+  border:1px solid rgba(0,229,255,0.2);
+  background:rgba(0,229,255,0.04);
+  border-radius:8px;
+  padding:24px 16px;
+  text-align:center;
+  opacity:0;
+  transform:translateY(20px);
+}
+.stat-card:nth-child(1){ animation: fadeUp 0.6s 0.4s ease forwards; }
+.stat-card:nth-child(2){ animation: fadeUp 0.6s 0.65s ease forwards; }
+.stat-card:nth-child(3){ animation: fadeUp 0.6s 0.9s ease forwards; }
+.stat-num {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(28px,4vw,48px);
+  font-weight:900;
+  color:var(--cyan);
+  text-shadow:0 0 20px rgba(0,229,255,0.6);
+  display:block;
+}
+.stat-num.r { color:var(--red); text-shadow:0 0 20px rgba(255,32,32,0.6); }
+.stat-label {
+  font-size:clamp(11px,1.4vw,14px);
+  color:rgba(255,255,255,0.6);
+  margin-top:8px;
+  letter-spacing:1px;
+  line-height:1.5;
+  text-transform:uppercase;
+}
+
+/* ═══════════════════════════════
+   SCENE 10 – HOW TO PROTECT
+═══════════════════════════════ */
+#s10 { padding:0 6vw; }
+.tips-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:clamp(10px,1.5vw,20px);
+  max-width:860px;
+  width:100%;
+  margin-top:22px;
+}
+.tip-card {
+  border:1px solid rgba(0,229,255,0.15);
+  background:rgba(0,10,20,0.6);
+  border-radius:8px;
+  padding:18px 20px;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  opacity:0;
+  transform:translateX(-15px);
+}
+.tip-card:nth-child(1){ animation: slideIn 0.5s 0.3s ease forwards; }
+.tip-card:nth-child(2){ animation: slideIn 0.5s 0.5s ease forwards; }
+.tip-card:nth-child(3){ animation: slideIn 0.5s 0.7s ease forwards; }
+.tip-card:nth-child(4){ animation: slideIn 0.5s 0.9s ease forwards; }
+.tip-num {
+  font-family:'Orbitron', monospace;
+  font-size:22px;
+  font-weight:900;
+  color:var(--cyan);
+  min-width:36px;
+  line-height:1;
+  text-shadow:0 0 10px var(--cyan);
+}
+.tip-text h4 {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(11px,1.3vw,13px);
+  color:#fff;
+  letter-spacing:1px;
+  margin-bottom:5px;
+}
+.tip-text p {
+  font-size:clamp(12px,1.4vw,14px);
+  color:rgba(255,255,255,0.58);
+  line-height:1.5;
+}
+
+/* ═══════════════════════════════
+   SCENE 11 – LOGO OUTRO
+═══════════════════════════════ */
+#s11 {
+  background:radial-gradient(ellipse at center, rgba(0,50,80,0.4) 0%, transparent 70%);
+}
+.logo-circle {
+  width:clamp(180px,28vw,300px);
+  height:clamp(180px,28vw,300px);
+  border-radius:50%;
+  background:radial-gradient(circle, #041e30 0%, #010d18 100%);
+  border:3px solid var(--cyan);
+  box-shadow:0 0 40px rgba(0,229,255,0.4), 0 0 100px rgba(0,229,255,0.15), inset 0 0 40px rgba(0,229,255,0.08);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column;
+  padding:24px;
+  opacity:0;
+  animation: logoReveal 1.2s 0.3s cubic-bezier(.34,1.56,.64,1) forwards;
+  position:relative;
+}
+.logo-circle::before {
+  content:'';
+  position:absolute; inset:-6px;
+  border-radius:50%;
+  border:1px solid rgba(0,229,255,0.2);
+  animation: rotateSlow 8s linear infinite;
+}
+.logo-circle::after {
+  content:'';
+  position:absolute; inset:-14px;
+  border-radius:50%;
+  border:1px dashed rgba(0,229,255,0.1);
+  animation: rotateSlow 14s linear infinite reverse;
+}
+.logo-shield { font-size:clamp(38px,6vw,64px); filter:drop-shadow(0 0 12px var(--cyan)); }
+.logo-brand {
+  font-family:'Orbitron', monospace;
+  font-size:clamp(13px,2vw,20px);
+  font-weight:900;
+  color:var(--cyan);
+  text-align:center;
+  letter-spacing:2px;
+  line-height:1.2;
+  margin-top:8px;
+  text-shadow:0 0 15px var(--cyan);
+}
+.logo-brand span { display:block; font-size:0.6em; color:rgba(255,255,255,0.7); letter-spacing:3px; font-weight:400; margin-top:4px; }
+.outro-tagline {
+  margin-top:30px;
+  font-size:clamp(13px,1.8vw,18px);
+  color:rgba(255,255,255,0.6);
+  letter-spacing:4px;
+  text-transform:uppercase;
+  opacity:0;
+  animation: fadeIn 0.8s 1.4s ease forwards;
+}
+.outro-tagline strong { color:var(--cyan); }
+.outro-website {
+  margin-top:12px;
+  font-family:'Orbitron', monospace;
+  font-size:clamp(11px,1.3vw,13px);
+  color:rgba(0,229,255,0.5);
+  letter-spacing:3px;
+  opacity:0;
+  animation: fadeIn 0.8s 1.8s ease forwards;
+}
+
+/* ═══════════════════════════════
+   SHIELD SVG in scenes
+═══════════════════════════════ */
+.shield-bg {
+  position:absolute;
+  opacity:0.04;
+  font-size:40vw;
+  pointer-events:none;
+  z-index:-1;
+  filter:blur(2px);
+}
+
+/* ═══════════════════════════════
+   KEYFRAMES
+═══════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(-15px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes popIn {
+  from { opacity:0; transform:scale(0.6); }
+  to   { opacity:1; transform:scale(1); }
+}
+@keyframes expandWidth {
+  from { width:0; }
+  to   { width:320px; }
+}
+@keyframes glitchReveal {
+  0%   { opacity:0; transform:translateY(20px) skewX(-3deg); clip-path:inset(0 100% 0 0); }
+  30%  { opacity:1; clip-path:inset(0 40% 0 0); }
+  60%  { clip-path:inset(0 10% 0 0); }
+  100% { opacity:1; transform:translateY(0) skewX(0); clip-path:inset(0 0% 0 0); }
+}
+@keyframes logoReveal {
+  from { opacity:0; transform:scale(0.5) rotate(-10deg); }
+  to   { opacity:1; transform:scale(1) rotate(0deg); }
+}
+@keyframes rotateSlow {
+  from { transform:rotate(0deg); }
+  to   { transform:rotate(360deg); }
+}
+@keyframes pulse {
+  0%,100% { box-shadow:0 0 20px rgba(0,229,255,0.3); }
+  50%      { box-shadow:0 0 50px rgba(0,229,255,0.7); }
+}
+@keyframes flicker {
+  0%,95%,100% { opacity:1; }
+  96%          { opacity:0.4; }
+  97%          { opacity:1; }
+  98%          { opacity:0.6; }
+}
+
+/* Flicker on title */
+.main-title { animation: glitchReveal 1s 0.6s ease forwards, flicker 6s 3s infinite; }
+
+/* ── PLAY BUTTON (initial) ── */
+#playBtn {
+  position:fixed; inset:0; z-index:20;
+  background:rgba(0,0,0,0.85);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  cursor:pointer;
+}
+#playBtn .pb-circle {
+  width:90px; height:90px;
+  border-radius:50%;
+  border:3px solid var(--cyan);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 30px var(--cyan);
+  animation:pulse 2s infinite;
+  transition:transform 0.2s;
+}
+#playBtn:hover .pb-circle { transform:scale(1.1); }
+#playBtn .pb-triangle {
+  width:0; height:0;
+  border-top:18px solid transparent;
+  border-bottom:18px solid transparent;
+  border-left:30px solid var(--cyan);
+  margin-left:6px;
+  filter:drop-shadow(0 0 6px var(--cyan));
+}
+#playBtn p {
+  margin-top:20px;
+  font-family:'Orbitron', monospace;
+  font-size:13px;
+  color:rgba(0,229,255,0.7);
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+
+/* ── CONTROLS ── */
+#controls {
+  position:fixed; bottom:28px; left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  display:none;
+  gap:14px;
+}
+#controls button {
+  background:rgba(0,229,255,0.08);
+  border:1px solid rgba(0,229,255,0.3);
+  color:var(--cyan);
+  font-family:'Orbitron', monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  padding:8px 18px;
+  cursor:pointer;
+  border-radius:4px;
+  transition:all 0.2s;
+}
+#controls button:hover {
+  background:rgba(0,229,255,0.18);
+  box-shadow:0 0 14px rgba(0,229,255,0.3);
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<div class="brackets">
+  <div class="brk tl"></div>
+  <div class="brk tr"></div>
+  <div class="brk bl"></div>
+  <div class="brk br"></div>
+</div>
+
+<div id="progressBar"></div>
+<div id="slideNum">01 / 11</div>
+
+<!-- ══════════════ PLAY BUTTON ══════════════ -->
+<div id="playBtn">
+  <div class="pb-circle"><div class="pb-triangle"></div></div>
+  <p>Play Awareness Video</p>
+</div>
+
+<!-- ══════════════ SCENE 1: TITLE ══════════════ -->
+<div class="scene" id="s1">
+  <div class="shield-bg">🛡</div>
+  <div class="glitch-wrap">
+    <div class="title-tag">// Awareness Campaign //</div>
+    <div class="main-title">CYBER<span>HARASSMENT</span></div>
+    <div class="sub-title">The Hidden Digital Threat</div>
+    <div class="divider-line"></div>
+    <div class="tagline">Stay Safe • Protect Yourself • Speak Up</div>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 2: DEFINITION ══════════════ -->
+<div class="scene" id="s2">
+  <div class="scene-label">// Defining the Threat</div>
+  <div class="scene-heading">What Is<br><span class="hl">Cyber Harassment?</span></div>
+  <div class="def-box">
+    <p>Cyber harassment is the use of <strong>digital technology</strong> to intimidate, threaten, humiliate, or harm another person. It occurs across social media, messaging apps, emails, and online platforms — affecting <strong>millions of people</strong> worldwide every day.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 3: STALKING ══════════════ -->
+<div class="scene threat-scene" id="s3">
+  <div class="threat-icon-wrap">
+    <span class="threat-icon" style="color:#00e5ff">👁</span>
+  </div>
+  <div class="threat-name">CYBER STALKING</div>
+  <div class="threat-desc">
+    Repeatedly monitoring someone's online activity, tracking their location, or sending persistent unwanted messages. <strong>Victims feel watched, unsafe, and violated</strong> — even in their own homes.
+  </div>
+  <div class="protect-strip">
+    <div class="pt-label">🛡 Protect Yourself</div>
+    <p>Review your privacy settings. Never share real-time location publicly. Block and report any stalker accounts immediately.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 4: ONLINE BULLYING ══════════════ -->
+<div class="scene threat-scene" id="s4">
+  <div class="threat-icon-wrap red-icon">
+    <span class="threat-icon" style="color:#ff2020">💬</span>
+  </div>
+  <div class="threat-name danger">ONLINE BULLYING</div>
+  <div class="threat-desc">
+    Sending hateful messages, public humiliation, spreading rumors, or deliberately excluding someone. <strong class="r">1 in 3 young people</strong> experience cyberbullying — leading to severe emotional and mental harm.
+  </div>
+  <div class="protect-strip">
+    <div class="pt-label">🛡 Protect Yourself</div>
+    <p>Do not engage with bullies. Save all evidence. Report to platform administrators and trusted adults or authorities.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 5: HATE SPEECH ══════════════ -->
+<div class="scene threat-scene" id="s5">
+  <div class="threat-icon-wrap red-icon">
+    <span class="threat-icon" style="color:#ff2020">📢</span>
+  </div>
+  <div class="threat-name danger">HATE SPEECH</div>
+  <div class="threat-desc">
+    Online content that attacks individuals based on race, religion, gender, or identity. Hate speech <strong class="r">incites violence</strong>, spreads fear, and creates toxic digital environments for entire communities.
+  </div>
+  <div class="protect-strip">
+    <div class="pt-label">🛡 Protect Yourself</div>
+    <p>Report hateful content immediately. Mute or block offenders. Support affected communities. Never amplify hate by sharing it.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 6: DOXING ══════════════ -->
+<div class="scene threat-scene" id="s6">
+  <div class="threat-icon-wrap">
+    <span class="threat-icon" style="color:#00e5ff">📍</span>
+  </div>
+  <div class="threat-name">DOXING</div>
+  <div class="threat-desc">
+    Publicly exposing someone's private information — address, phone number, workplace — without consent. Doxing can lead to <strong>real-world danger</strong>, harassment campaigns, and physical threats.
+  </div>
+  <div class="protect-strip">
+    <div class="pt-label">🛡 Protect Yourself</div>
+    <p>Limit personal info shared online. Use private email addresses. Regularly audit what information is publicly available about you.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 7: IMPERSONATION ══════════════ -->
+<div class="scene threat-scene" id="s7">
+  <div class="threat-icon-wrap">
+    <span class="threat-icon" style="color:#00e5ff">🎭</span>
+  </div>
+  <div class="threat-name">IMPERSONATION</div>
+  <div class="threat-desc">
+    Creating fake profiles or accounts to deceive others, damage reputations, or manipulate situations. Impersonators can <strong>destroy relationships</strong>, careers, and mental well-being of victims.
+  </div>
+  <div class="protect-strip">
+    <div class="pt-label">🛡 Protect Yourself</div>
+    <p>Enable two-factor authentication. Report fake accounts to platforms. Alert your contacts if you discover a fake profile of you.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 8: DISINFORMATION ══════════════ -->
+<div class="scene threat-scene" id="s8">
+  <div class="threat-icon-wrap red-icon">
+    <span class="threat-icon" style="color:#ff2020">📰</span>
+  </div>
+  <div class="threat-name danger">DISINFORMATION</div>
+  <div class="threat-desc">
+    Deliberately spreading false information to damage reputation or manipulate public opinion. <strong class="r">False narratives spread 6× faster</strong> than truth online — causing real psychological and social damage.
+  </div>
+  <div class="protect-strip">
+    <div class="pt-label">🛡 Protect Yourself</div>
+    <p>Verify before sharing. Use trusted news sources. Report false content. Critical thinking is your strongest defense.</p>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 9: STATS ══════════════ -->
+<div class="scene" id="s9">
+  <div class="scene-label">// The Scale of the Problem</div>
+  <div class="scene-heading">By The <span class="hl">Numbers</span></div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-num">41%</span>
+      <div class="stat-label">of adults have experienced<br>online harassment</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num r">75%</span>
+      <div class="stat-label">of victims suffer anxiety,<br>depression & trauma</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">1 in 3</span>
+      <div class="stat-label">young people are<br>cyberbullied globally</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num r">60%</span>
+      <div class="stat-label">of cases go unreported<br>due to fear or shame</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">90%</span>
+      <div class="stat-label">of teen victims know<br>their harasser online</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num r">24/7</span>
+      <div class="stat-label">harassment never stops —<br>it follows victims home</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 10: HOW TO PROTECT ══════════════ -->
+<div class="scene" id="s10">
+  <div class="scene-label">// Defense Strategies</div>
+  <div class="scene-heading">How To <span class="hl">Protect</span> Yourself</div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-num">01</div>
+      <div class="tip-text">
+        <h4>🔒 Lock Your Privacy</h4>
+        <p>Set all accounts to private. Control who can see your posts, location, and personal information.</p>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">02</div>
+      <div class="tip-text">
+        <h4>📸 Document Everything</h4>
+        <p>Screenshot all harassment. Keep records with dates and times before blocking the offender.</p>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">03</div>
+      <div class="tip-text">
+        <h4>🚨 Report & Block</h4>
+        <p>Use platform report tools. Contact cybercrime authorities. Don't suffer in silence — report it.</p>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">04</div>
+      <div class="tip-text">
+        <h4>🤝 Seek Support</h4>
+        <p>Talk to trusted family, friends, or professionals. You are not alone — help is always available.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SCENE 11: LOGO OUTRO ══════════════ -->
+<div class="scene" id="s11">
+  <div class="logo-circle">
+    <span class="logo-shield">🛡</span>
+    <div class="logo-brand">CYBERHAYATPK<span>AWARENESS &amp; DEFENSE</span></div>
+  </div>
+  <div class="outro-tagline"><strong>Stay Safe</strong> • Protect Yourself • Speak Up</div>
+  <div class="outro-website">cyberhayatpk.com</div>
+</div>
+
+<!-- ══════════════ CONTROLS ══════════════ -->
+<div id="controls">
+  <button id="prevBtn">◀ PREV</button>
+  <button id="pauseBtn">⏸ PAUSE</button>
+  <button id="nextBtn">NEXT ▶</button>
+</div>
+
+<script>
+// ── CANVAS BACKGROUND: circuit grid + particles ──
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], lines = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Particles
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * 2000,
+    y: Math.random() * 1200,
+    r: Math.random() * 1.5 + 0.3,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    a: Math.random()
+  });
+}
+
+// Grid lines (static)
+for (let x = 0; x < 2000; x += 80)
+  lines.push({ x1:x, y1:0, x2:x, y2:1200, h:true });
+for (let y = 0; y < 1200; y += 80)
+  lines.push({ x1:0, y1:y, x2:2000, y2:y, h:false });
+
+let pulse = 0;
+function drawBg() {
+  ctx.clearRect(0, 0, W, H);
+  pulse += 0.015;
+
+  // Grid
+  ctx.lineWidth = 0.4;
+  lines.forEach(l => {
+    ctx.strokeStyle = `rgba(0,229,255,${0.07 + 0.03 * Math.sin(pulse + l.x1 * 0.01)})`;
+    ctx.beginPath();
+    ctx.moveTo(l.x1 % W, l.y1 % H);
+    ctx.lineTo(l.x2 % W, l.y2 % H);
+    ctx.stroke();
+  });
+
+  // Particles
+  particles.forEach(p => {
+    p.x = (p.x + p.vx + W) % W;
+    p.y = (p.y + p.vy + H) % H;
+    const alpha = 0.3 + 0.4 * Math.sin(pulse + p.a * 5);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,229,255,${alpha})`;
+    ctx.fill();
+  });
+
+  // Occasional red flash node
+  if (Math.random() < 0.005) {
+    const rx = Math.random() * W, ry = Math.random() * H;
+    ctx.beginPath();
+    ctx.arc(rx, ry, 3, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,32,32,0.8)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(rx, ry, 10, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,32,32,0.1)';
+    ctx.fill();
+  }
+
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ── SLIDESHOW LOGIC ──
+const DURATIONS = [4000, 5000, 6000, 6000, 6000, 6000, 6000, 6000, 7000, 7000, 8000];
+
+let current = 0;
+let timer = null;
+let paused = false;
+let started = false;
+
+const progressBar = document.getElementById('progressBar');
+const slideNum    = document.getElementById('slideNum');
+const pauseBtn    = document.getElementById('pauseBtn');
+const controls    = document.getElementById('controls');
+
+function getScenes() {
+  return document.querySelectorAll('.scene');
+}
+
+function restartAnimations(el) {
+  // Force browser to reflow so CSS animations restart cleanly
+  const animated = el.querySelectorAll('*');
+  animated.forEach(child => {
+    child.style.animation = 'none';
+    child.offsetHeight; // trigger reflow
+    child.style.animation = '';
+  });
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = '';
+}
+
+function showScene(idx) {
+  const scenes = getScenes();
+  const totalScenes = scenes.length;
+
+  // Hide ALL scenes instantly
+  scenes.forEach((s, i) => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+
+  // Show and restart the target scene
+  const target = scenes[idx];
+  target.style.display = 'flex';
+  // Force reflow so animations restart
+  target.offsetHeight;
+  restartAnimations(target);
+  target.classList.add('active');
+
+  const pct = ((idx + 1) / totalScenes) * 100;
+  progressBar.style.width = pct + '%';
+  slideNum.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(totalScenes).padStart(2, '0');
+}
+
+function advance() {
+  const totalScenes = getScenes().length;
+  if (current < totalScenes - 1) {
+    current++;
+    showScene(current);
+    if (!paused) scheduleNext();
+  }
+}
+
+function scheduleNext() {
+  clearTimeout(timer);
+  const totalScenes = getScenes().length;
+  if (current < totalScenes - 1) {
+    timer = setTimeout(advance, DURATIONS[current]);
+  }
+}
+
+function startVideo() {
+  document.getElementById('playBtn').style.display = 'none';
+  controls.style.display = 'flex';
+  started = true;
+  // Hide all scenes first
+  getScenes().forEach(s => { s.style.display = 'none'; s.classList.remove('active'); });
+  showScene(0);
+  scheduleNext();
+}
+
+document.getElementById('playBtn').addEventListener('click', startVideo);
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  clearTimeout(timer);
+  const totalScenes = getScenes().length;
+  if (current < totalScenes - 1) { current++; showScene(current); if (!paused) scheduleNext(); }
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  clearTimeout(timer);
+  if (current > 0) { current--; showScene(current); if (!paused) scheduleNext(); }
+});
+
+document.getElementById('pauseBtn').addEventListener('click', () => {
+  paused = !paused;
+  pauseBtn.textContent = paused ? '▶ PLAY' : '⏸ PAUSE';
+  if (paused) clearTimeout(timer);
+  else scheduleNext();
+});
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (!started) return;
+  if (e.key === 'ArrowRight' || e.key === ' ') document.getElementById('nextBtn').click();
+  if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
+  if (e.key === 'p' || e.key === 'P') document.getElementById('pauseBtn').click();
+});
+</script>
+</body>
+</html>
