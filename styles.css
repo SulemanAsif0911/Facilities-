@@ -26,21 +26,29 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Updated Background: Applied BKK2.png seamlessly as a fixed backdrop */
+/* Page Background: Restored clean grid overlay so content sections remain beautifully readable */
 body {
   margin: 0;
   min-height: 100vh;
-  background-image: url('BKK2.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background:
+    linear-gradient(rgba(34, 246, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 246, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(255, 48, 72, 0.12), transparent 45rem),
+    linear-gradient(135deg, var(--bg), #02050c 48%, #07101d);
+  background-size: 64px 64px, 64px 64px, auto, auto;
   color: var(--text);
 }
 
-/* Removed old background lines/gradients to keep the image perfectly clean */
 body::before {
-  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(120deg, transparent 0 18%, rgba(34, 246, 255, 0.06) 18% 18.3%, transparent 18.3% 43%, rgba(255, 48, 72, 0.06) 43% 43.3%, transparent 43.3%),
+    linear-gradient(60deg, transparent 0 62%, rgba(34, 246, 255, 0.05) 62% 62.4%, transparent 62.4%);
+  opacity: 0.48;
+  pointer-events: none;
 }
 
 a {
@@ -130,11 +138,11 @@ nav a[aria-current="page"] {
 .hero,
 .features-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.92fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 1fr);
   align-items: center;
-  gap: clamp(2rem, 5vw, 5.5rem);
+  gap: clamp(2rem, 5vw, 4rem);
   min-height: calc(100vh - 78px);
-  padding: 5.5rem clamp(1rem, 5vw, 5rem);
+  padding: 3.5rem clamp(1rem, 5vw, 5rem);
 }
 
 .features-hero {
@@ -168,8 +176,8 @@ p {
 h1 {
   margin-bottom: 1rem;
   color: var(--cyan);
-  font-size: 6rem;
-  line-height: 0.95;
+  font-size: 4.5rem;
+  line-height: 1.05;
   letter-spacing: 0;
   text-shadow: 0 0 28px rgba(34, 246, 255, 0.44);
 }
@@ -257,18 +265,20 @@ h3 {
   display: grid;
   justify-items: center;
   gap: 1.2rem;
+  width: 100%;
 }
 
+/* Redesigned Graphic Container: Uses your BKK2.png banner beautifully structured as a main interactive dashboard module */
 .hero-logo {
-  width: min(100%, 560px);
-  aspect-ratio: 1;
-  border: 1px solid rgba(34, 246, 255, 0.3);
-  border-radius: 50%;
-  background: #03121e;
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 16 / 9;
+  content: url('BKK2.png');
+  border: 2px solid rgba(34, 246, 255, 0.4);
+  border-radius: 12px;
   object-fit: cover;
   box-shadow:
-    0 0 55px rgba(34, 246, 255, 0.28),
-    0 0 34px rgba(255, 48, 72, 0.15),
+    0 0 40px rgba(34, 246, 255, 0.25),
     var(--shadow);
 }
 
@@ -290,16 +300,15 @@ h3 {
   font-weight: 800;
 }
 
-/* Flattened the default solid colors of layout components to let the image reveal smoothly */
 .band {
   border-top: 1px solid rgba(34, 246, 255, 0.12);
-  background: transparent;
+  background: rgba(4, 12, 22, 0.54);
 }
 
-/* Semi-transparency layer for dark bands to maintain strong copy legibility over your custom picture background */
 .dark-band {
-  background: linear-gradient(180deg, rgba(9, 26, 43, 0.88), rgba(3, 8, 20, 0.88));
-  backdrop-filter: blur(4px);
+  background:
+    linear-gradient(180deg, rgba(9, 26, 43, 0.92), rgba(3, 8, 20, 0.92)),
+    repeating-linear-gradient(90deg, transparent 0 42px, rgba(34, 246, 255, 0.05) 42px 43px);
 }
 
 .container {
@@ -1092,7 +1101,7 @@ body[data-language="ur"] .lang-ur {
   }
 
   .hero-visual {
-    order: -1;
+    order: 1; /* Pushes graphic banner below header text on tablet views */
   }
 
   .cta-inner {
@@ -1105,10 +1114,9 @@ body[data-language="ur"] .lang-ur {
 }
 
 @media (max-width: 760px) {
-   Tarawih
   h1,
   .features-page h1 {
-    font-size: 3.2rem;
+    font-size: 3rem;
   }
 
   h2 {
@@ -1178,7 +1186,7 @@ body[data-language="ur"] .lang-ur {
 @media (max-width: 460px) {
   h1,
   .features-page h1 {
-    font-size: 2.7rem;
+    font-size: 2.4rem;
   }
 
   .helpline-card a {
