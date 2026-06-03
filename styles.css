@@ -26,28 +26,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Updated Background: Applied BKK2.png seamlessly as a fixed backdrop */
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    linear-gradient(rgba(34, 246, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 246, 255, 0.04) 1px, transparent 1px),
-    radial-gradient(circle at 50% 0%, rgba(255, 48, 72, 0.18), transparent 34rem),
-    linear-gradient(135deg, var(--bg), #02050c 48%, #07101d);
-  background-size: 64px 64px, 64px 64px, auto, auto;
+  background-image: url('BKK2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--text);
 }
 
+/* Removed old background lines/gradients to keep the image perfectly clean */
 body::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  content: "";
-  background:
-    linear-gradient(120deg, transparent 0 18%, rgba(34, 246, 255, 0.1) 18% 18.3%, transparent 18.3% 43%, rgba(255, 48, 72, 0.1) 43% 43.3%, transparent 43.3%),
-    linear-gradient(60deg, transparent 0 62%, rgba(34, 246, 255, 0.08) 62% 62.4%, transparent 62.4%);
-  opacity: 0.48;
-  pointer-events: none;
+  display: none;
 }
 
 a {
@@ -297,15 +290,16 @@ h3 {
   font-weight: 800;
 }
 
+/* Flattened the default solid colors of layout components to let the image reveal smoothly */
 .band {
   border-top: 1px solid rgba(34, 246, 255, 0.12);
-  background: rgba(4, 12, 22, 0.54);
+  background: transparent;
 }
 
+/* Semi-transparency layer for dark bands to maintain strong copy legibility over your custom picture background */
 .dark-band {
-  background:
-    linear-gradient(180deg, rgba(9, 26, 43, 0.92), rgba(3, 8, 20, 0.92)),
-    repeating-linear-gradient(90deg, transparent 0 42px, rgba(34, 246, 255, 0.05) 42px 43px);
+  background: linear-gradient(180deg, rgba(9, 26, 43, 0.88), rgba(3, 8, 20, 0.88));
+  backdrop-filter: blur(4px);
 }
 
 .container {
@@ -1111,6 +1105,7 @@ body[data-language="ur"] .lang-ur {
 }
 
 @media (max-width: 760px) {
+   Tarawih
   h1,
   .features-page h1 {
     font-size: 3.2rem;
@@ -1195,8 +1190,6 @@ body[data-language="ur"] .lang-ur {
   }
 }
 
-/* ── Additions: button loading state, submit feedback, WhatsApp channel ── */
-
 button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
@@ -1207,12 +1200,10 @@ button:disabled {
   pointer-events: none;
 }
 
-/* Output box success/info tint */
 .output-box:not(:empty) {
   border-color: rgba(34, 246, 255, 0.35);
 }
 
-/* WhatsApp channel button */
 .whatsapp-channel-btn {
   display: inline-flex;
   align-items: center;
@@ -1221,20 +1212,17 @@ button:disabled {
   letter-spacing: 0.01em;
 }
 
-/* Lang button active state */
 .lang-button.is-active {
   background: rgba(34, 246, 255, 0.15);
   border-color: var(--cyan);
   color: var(--cyan);
 }
 
-/* Ambassador textarea */
 #ambassadorWhy {
   min-height: 90px;
   resize: vertical;
 }
 
-/* Story result positive state */
 #storyResult,
 #ambassadorResult {
   word-break: break-word;
