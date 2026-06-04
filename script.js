@@ -6,25 +6,6 @@
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx78KYP8R0mJn_5mbDV3pFkRXAdNrZPf7JketERTH4IG68t5-WxLWLg66eeH9pQK7kG/exec";
 
-// ── LIVE AI CHATBOT CONFIG (100% FREE REVERSE-PROXY) ──────────
-// Paste your deployed Cloudflare Worker URL below to cleanly route to Gemini 2.0 Flash
-const CHAT_ENDPOINT = "https://cyberhayat-bot.YOURSUBDOMAIN.workers.dev"; 
-
-const CHAT_SYSTEM = `You are the AI support assistant for Cyber Hayat PK — a student-led cyber harassment awareness initiative in Pakistan.
-
-Guide victims of cyber harassment step by step. Always reply in the same language the user writes in (Urdu or English).
-
-Key rules:
-- Tell users to SAVE EVIDENCE first before blocking or deleting anything
-- For blackmail/sextortion: do NOT pay, do NOT send more content, call DRF 0800-39393
-- For fake accounts: screenshot profile URL + messages, report inside platform, then file at complaint.fia.gov.pk
-- For stalking: document timestamps, change privacy settings NOW
-- For urgent safety: direct to 1043 (Punjab Women's Helpline) or 15 (Police) IMMEDIATELY
-
-Pakistani legal references when relevant: PECA 2016, FIA Cybercrime Wing (9911), NCCIA (1799), DRF helpline (0800-39393), Punjab Women's Helpline (1043).
-
-Keep replies to 3-5 sentences. Be calm, reassuring, and deeply empathetic. Never ask for CNIC, passwords, home addresses, or full legal names.`;
-
 // ─────────────────────────────────────────────────────────────
 (() => {
   // ── Image error handling ──────────────────────────────────
@@ -94,7 +75,7 @@ Keep replies to 3-5 sentences. Be calm, reassuring, and deeply empathetic. Never
       return;
     }
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(payload),
@@ -244,7 +225,7 @@ Keep replies to 3-5 sentences. Be calm, reassuring, and deeply empathetic. Never
     });
   }
 
-  // ── LIVE AI CHATBOT ENGINE ────────────────────────────────
+  // ── UPGRADED FUNCTIONAL CHATBOT ──────────────────────────
   const chatResponses = {
     blackmail: "Do NOT pay or send any more content. Save all threats, demands, phone numbers, and account names before blocking. Call DRF helpline 0800-39393 or file at complaint.nccia.gov.pk. You are not alone and this is a crime.",
     fake:      "Screenshot the fake profile URL, bio, posts, and any messages. Report the account inside the platform immediately, then submit evidence to FIA at complaint.fia.gov.pk. Identity misuse is covered under PECA.",
@@ -253,110 +234,64 @@ Keep replies to 3-5 sentences. Be calm, reassuring, and deeply empathetic. Never
     urgent:    "If you are in immediate danger, call 15 (Police) or 1043 (Punjab Women's Helpline) now. For cyber threats: FIA helpline 9911, NCCIA helpline 1799, DRF 0800-39393. Tell a trusted person where you are.",
   };
 
-  const chatWindow  = document.querySelector("#chatWindow");
-  const chatOptions = document.querySelectorAll("[data-chat-topic]");
-  const chatForm    = document.querySelector("#chatForm");
-  const chatInput   = document.querySelector("#chatInput");
-  const sendBtn     = document.querySelector("#sendBtn");
-  const chatStatus  = document.querySelector("#chatStatus");
+  const chatWindow    = document.querySelector("#chatWindow");
+  const chatOptions   = document.querySelectorAll("[data-chat-topic]");
+  const chatForm      = document.querySelector("#chatForm");
+  const chatInput     = document.querySelector("#chatInput");
 
-  let chatHistory = [];
-  let chatBusy = false;
-
-  function chatAppend(role, text) {
-    if (!chatWindow) return null;
-    const el = document.createElement("div");
-    el.className = `message ${role}`;
-    el.textContent = text;
-    chatWindow.appendChild(el);
+  const appendChatMessage = (sender, text) => {
+    if (!chatWindow) return;
+    const msgDiv = document.createElement("div");
+    msgDiv.className = `message ${sender}`;
+    msgDiv.textContent = text;
+    chatWindow.appendChild(msgDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
-    return el;
-  }
-
-  function chatAppendThinking() {
-    if (!chatWindow) return null;
-    const el = document.createElement("div");
-    el.className = "message thinking";
-    el.innerHTML = `<span class="dots"><span></span><span></span><span></span></span>`;
-    chatWindow.appendChild(el);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-    return el;
-  }
-
-  function setChatBusy(on) {
-    chatBusy = on;
-    if (chatInput) chatInput.disabled = on;
-    if (sendBtn) sendBtn.disabled = on;
-    if (chatStatus) chatStatus.textContent = on ? "AI is thinking…" : "";
-  }
-
-  async function getChatReply(messages) {
-    if (!CHAT_ENDPOINT || CHAT_ENDPOINT.includes("YOURSUBDOMAIN")) {
-      return "Configuration required: Please create your free Cloudflare Worker proxy and drop the URL link inside script.js to activate your live AI chatbot infrastructure.";
-    }
-    const formattedMessages = messages.map(m => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }]
-    }));
-    const res = await fetch(CHAT_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: formattedMessages, systemPrompt: CHAT_SYSTEM })
-    });
-    if (!res.ok) throw new Error("Proxy response failed: " + res.status);
-    const data = await res.json();
-    return data.reply || "No response received. Please try again.";
-  }
-
-  async function handleUserMessage(text) {
-    if (!text.trim() || chatBusy) return;
-    chatAppend("user", text);
-    chatHistory.push({ role: "user", content: text });
-    if (chatInput) chatInput.value = "";
-    setChatBusy(true);
-    const thinkingEl = chatAppendThinking();
-    try {
-      const reply = await getChatReply(chatHistory.slice(-10));
-      if (thinkingEl) thinkingEl.remove();
-      chatAppend("assistant", reply);
-      chatHistory.push({ role: "assistant", content: reply });
-    } catch (err) {
-      if (thinkingEl) thinkingEl.remove();
-      chatAppend("assistant", "⚠️ Connection issue. Please check your Cloudflare Worker server routing configs or refresh and re-submit.");
-      console.error(err);
-    } finally {
-      setChatBusy(false);
-    }
-  }
+  };
 
   if (chatWindow) {
-    chatWindow.innerHTML = `<div class="message assistant">👋 Assalam o Alaikum! I am your live AI safety assistant. You can click a quick topic button below or type details about your situation freely in Urdu or English. How can I guide you today?</div>`;
+    chatWindow.innerHTML = `<div class="message assistant">👋 Assalam o Alaikum. I am your active security guide. Type your question directly below, or pick a rapid choice badge!</div>`;
     
     chatOptions.forEach((btn) => {
       btn.addEventListener("click", () => {
         const topic = btn.dataset.chatTopic;
-        const staticReply = chatResponses[topic] || "Please describe your situation below.";
-        if (chatBusy) return;
-        chatAppend("user", btn.textContent);
-        chatHistory.push({ role: "user", content: btn.textContent });
-        setChatBusy(true);
-        const thinkingEl = chatAppendThinking();
-        setTimeout(() => {
-          if (thinkingEl) thinkingEl.remove();
-          chatAppend("assistant", staticReply);
-          chatHistory.push({ role: "assistant", content: staticReply });
-          document.querySelectorAll("[data-chat-topic]").forEach(b => b.blur());
-          setChatBusy(false);
-        }, 400);
+        const response = chatResponses[topic] || "Please select a response option.";
+        appendChatMessage("user", btn.textContent);
+        window.setTimeout(() => appendChatMessage("assistant", response), 300);
       });
     });
+  }
 
-    if (chatForm) {
-      chatForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        handleUserMessage(chatInput.value);
-      });
-    }
+  if (chatForm && chatInput) {
+    chatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const userText = chatInput.value.trim();
+      if (!userText) return;
+
+      appendChatMessage("user", userText);
+      chatInput.value = "";
+
+      // Conversational Matching Engine
+      let botResponse = "I process details privately here. To get precise help, utilize the interactive 'Evidence Checklist' or 'Letter Template Generator' items lower on this safety screen. Always screenshot threats immediately before blocking accounts.";
+      const cleanText = userText.toLowerCase();
+
+      if (cleanText.includes("blackmail") || cleanText.includes("money") || cleanText.includes("extort") || cleanText.includes("pay")) {
+        botResponse = chatResponses.blackmail;
+      } else if (cleanText.includes("fake") || cleanText.includes("impersonat") || cleanText.includes("identity") || cleanText.includes("profile")) {
+        botResponse = chatResponses.fake;
+      } else if (cleanText.includes("stalk") || cleanText.includes("harass") || cleanText.includes("message") || cleanText.includes("call")) {
+        botResponse = chatResponses.stalking;
+      } else if (cleanText.includes("dox") || cleanText.includes("leak") || cleanText.includes("number") || cleanText.includes("photo") || cleanText.includes("cnic")) {
+        botResponse = chatResponses.doxing;
+      } else if (cleanText.includes("urgent") || cleanText.includes("danger") || cleanText.includes("unsafe") || cleanText.includes("threat")) {
+        botResponse = chatResponses.urgent;
+      } else if (cleanText.includes("peca") || cleanText.includes("law") || cleanText.includes("legal") || cleanText.includes("crime") || cleanText.includes("punish")) {
+        botResponse = "Under the Prevention of Electronic Crimes Act (PECA 2016), actions like identity misuse, stalking, and privacy breaches carry severe penalties. Look at the 'Know Your Rights' matrix down below to check verified links.";
+      } else if (cleanText.includes("fia") || cleanText.includes("nccia") || cleanText.includes("portal") || cleanText.includes("complain")) {
+        botResponse = "Formal cases can be reported directly online via complaint.nccia.gov.pk or complaint.fia.gov.pk. Use the Complaint Letter tool below to compile your case record framework first.";
+      }
+
+      window.setTimeout(() => appendChatMessage("assistant", botResponse), 450);
+    });
   }
 
   // ── LANGUAGE TOGGLE ───────────────────────────────────────
@@ -379,8 +314,8 @@ Keep replies to 3-5 sentences. Be calm, reassuring, and deeply empathetic. Never
     stalking:     ["Screenshots of repeated messages or calls","Profile links and usernames of every account involved","Dates, times, and frequency of contact","Any threats, location tracking, or attempts to contact friends/family","Privacy settings changed after the incident"],
     sextortion:   ["All threats and demands exactly as received","Phone numbers, wallet details, bank details, or payment requests","Profile links, usernames, and screenshots","Dates and times of blackmail attempts","Do not send more content or money"],
     impersonation:["Fake profile URL","Screenshots of profile photo, bio, posts, and messages","Proof of your original account or identity ownership","Reports submitted to the platform","Names of people contacted by the fake account"],
-    doxing:        ["Public post URL where private information appeared","Screenshots showing your exposed data","Comments, shares, or threats connected to the leak","Records of platform takedown requests","Safety steps taken offline"],
-    bullying:      ["Screenshots of threats, insults, or coordinated abuse","Links to posts, groups, or comment threads","Names/usernames of accounts involved","Impact notes such as school, workplace, or family pressure","Trusted person informed and privacy settings updated"],
+    doxing:       ["Public post URL where private information appeared","Screenshots showing your exposed data","Comments, shares, or threats connected to the leak","Records of platform takedown requests","Safety steps taken offline"],
+    bullying:     ["Screenshots of threats, insults, or coordinated abuse","Links to posts, groups, or comment threads","Names/usernames of accounts involved","Impact notes such as school, workplace, or family pressure","Trusted person informed and privacy settings updated"],
   };
 
   const buildChecklist   = document.querySelector("#buildChecklist");
