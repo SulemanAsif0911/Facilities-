@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Cyber Hayat PK — Live AI Chatbot</title>
+<style>
+  :root {
+    --navy: #030814;
+    --navy2: #071228;
+    --cyan: #22f6ff;
+    --cyan-soft: #a8f0f4;
+    --red: #ff3048;
+    --text: #e8eaf0;
+    --muted: #7a8ba0;
+    --border-cyan: rgba(34,246,255,0.22);
+    --border-red: rgba(255,48,72,0.28);
+    --bg-cyan: rgba(34,246,255,0.08);
+    --bg-red: rgba(255,48,72,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,sans-serif;background:var(--navy);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem}
+
+  .chatbot-wrap{width:100%;max-width:680px;display:flex;flex-direction:column;gap:0}
+
+  /* Header */
+  .chat-header{background:var(--navy2);border:1px solid var(--border-cyan);border-bottom:none;border-radius:12px 12px 0 0;padding:1rem 1.25rem;display:flex;align-items:center;gap:10px}
+  .chat-header-dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);flex-shrink:0}
+  .chat-header-dot.thinking{animation:pulse 1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  .chat-header-title{font-size:14px;font-weight:600;color:var(--cyan-soft)}
+  .chat-header-sub{font-size:12px;color:var(--muted);margin-left:auto}
+
+  /* Window */
+  .chat-window{background:rgba(3,8,20,0.68);border:1px solid var(--border-cyan);border-bottom:none;padding:1.25rem;display:flex;flex-direction:column;gap:0.9rem;min-height:360px;max-height:460px;overflow-y:auto;scroll-behavior:smooth}
+
+  /* Messages */
+  .message{max-width:86%;padding:0.85rem 1rem;border-radius:8px;line-height:1.6;font-size:14px;animation:fadein .2s ease}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .message.assistant{align-self:flex-start;border:1px solid var(--border-cyan);background:var(--bg-cyan);color:var(--cyan-soft)}
+  .message.user{align-self:flex-end;border:1px solid var(--border-red);background:var(--bg-red);color:var(--text)}
+  .message.thinking{align-self:flex-start;border:1px solid var(--border-cyan);background:var(--bg-cyan);color:var(--muted);font-style:italic}
+
+  /* Typing dots */
+  .dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--cyan);margin-right:3px;animation:dot 1.2s ease-in-out infinite}
+  .dots span:nth-child(2){animation-delay:.2s}
+  .dots span:nth-child(3){animation-delay:.4s}
+  @keyframes dot{0%,80%,100%{transform:scale(0.6);opacity:0.4}40%{transform:scale(1);opacity:1}}
+
+  /* Quick chips */
+  .chat-chips{background:var(--navy2);border:1px solid var(--border-cyan);border-bottom:none;padding:0.75rem 1.25rem;display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:6px 14px;border:1px solid var(--border-cyan);border-radius:999px;background:rgba(3,8,20,0.72);color:var(--cyan-soft);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+  .chip:hover{border-color:var(--cyan);background:rgba(34,246,255,0.14)}
+  .chip:disabled{opacity:0.4;cursor:not-allowed}
+
+  /* Input bar */
+  .chat-input-bar{background:var(--navy2);border:1px solid var(--border-cyan);border-radius:0 0 12px 12px;padding:0.85rem 1.25rem;display:flex;gap:10px;align-items:flex-end}
+  .chat-input{flex:1;background:rgba(3,8,20,0.8);border:1px solid rgba(34,246,255,0.2);border-radius:8px;color:var(--text);font-size:14px;padding:10px 14px;resize:none;min-height:42px;max-height:120px;line-height:1.5;font-family:inherit;overflow-y:auto}
+  .chat-input:focus{outline:none;border-color:rgba(34,246,255,0.5)}
+  .chat-input::placeholder{color:var(--muted)}
+  .send-btn{width:42px;height:42px;border-radius:8px;background:rgba(34,246,255,0.15);border:1px solid var(--border-cyan);color:var(--cyan);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+  .send-btn:hover:not(:disabled){background:rgba(34,246,255,0.25);border-color:var(--cyan)}
+  .send-btn:disabled{opacity:0.4;cursor:not-allowed}
+
+  /* Disclaimer */
+  .chat-disclaimer{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5;padding:0 4px}
+  .chat-disclaimer a{color:var(--cyan-soft);text-decoration:none}
+  .chat-disclaimer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="chatbot-wrap">
+
+  <div class="chat-header">
+    <div class="chat-header-dot" id="statusDot"></div>
+    <span class="chat-header-title">Cyber Hayat PK — AI Support</span>
+    <span class="chat-header-sub" id="statusText">Ready</span>
+  </div>
+
+  <div class="chat-window" id="chatWindow" role="log" aria-live="polite" aria-label="Chat messages"></div>
+
+  <div class="chat-chips" id="chipsBar">
+    <button class="chip" onclick="sendChip(this, 'I am being blackmailed online')">Being blackmailed</button>
+    <button class="chip" onclick="sendChip(this, 'Someone made a fake account of me')">Fake account</button>
+    <button class="chip" onclick="sendChip(this, 'I am being stalked online')">Online stalking</button>
+    <button class="chip" onclick="sendChip(this, 'My private information was shared without consent')">Info leaked</button>
+    <button class="chip" onclick="sendChip(this, 'I feel unsafe right now and need urgent help')">I feel unsafe</button>
+    <button class="chip" onclick="sendChip(this, 'What are my legal rights under PECA 2016?')">My legal rights</button>
+  </div>
+
+  <div class="chat-input-bar">
+    <textarea
+      class="chat-input"
+      id="chatInput"
+      placeholder="Describe your situation… (your message is private)"
+      rows="1"
+      aria-label="Type your message"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" onclick="handleSend()" aria-label="Send message">
+      &#9654;
+    </button>
+  </div>
+
+  <p class="chat-disclaimer">
+    This chatbot is powered by Claude AI. Do not share personal identifiers (CNIC, full name, exact address).
+    For emergencies call <a href="tel:1043">1043</a> (Punjab Women's Helpline) or <a href="tel:15">15</a> (Police).
+  </p>
+
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+// This calls the Anthropic API directly from the browser.
+// For a production website, replace this with a call to your
+// own backend (e.g. a Make.com webhook or a Cloudflare Worker)
+// so your API key stays hidden. See the guide below.
+const API_KEY = "PASTE_YOUR_ANTHROPIC_API_KEY_HERE";
+
+const SYSTEM_PROMPT = `You are the AI support assistant for Cyber Hayat PK — a student-led cyber harassment awareness initiative in Pakistan based at the University of Central Punjab (UCP).
+
+Your role is to:
+1. Guide victims of cyber harassment step by step through what to do
+2. Always answer in the same language the user writes in (Urdu or English)
+3. Refer to Pakistani laws (PECA 2016, Prevention of Electronic Crimes Act) when relevant
+4. Recommend official Pakistani channels: FIA Cybercrime Wing (9911), NCCIA (1799), DRF helpline (0800-39393), Punjab Women's Helpline (1043)
+5. Be calm, empathetic, and never judgmental
+
+Key guidance principles:
+- Always say: save evidence FIRST before blocking or deleting
+- For blackmail/sextortion: do NOT pay, do NOT send more content
+- For fake accounts: screenshot profile URL, bio, and messages; report inside the platform; then file at FIA
+- For stalking: document timestamps, change privacy settings immediately
+- For urgent safety risk: direct to 1043 or 15 (police) immediately
+
+Keep responses concise (3-5 sentences max per reply). Use simple language. If someone is in immediate danger, always prioritize safety resources first.
+
+Do NOT ask for or encourage sharing of: full name, CNIC, home address, or any identifying information.`;
+
+// ── STATE ─────────────────────────────────────────────────────
+const conversationHistory = [];
+let isThinking = false;
+
+// ── DOM REFS ──────────────────────────────────────────────────
+const chatWindow = document.getElementById("chatWindow");
+const chatInput  = document.getElementById("chatInput");
+const sendBtn    = document.getElementById("sendBtn");
+const statusDot  = document.getElementById("statusDot");
+const statusText = document.getElementById("statusText");
+
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener("DOMContentLoaded", () => {
+  appendMessage("assistant",
+    "Assalam o Alaikum! I am the Cyber Hayat PK AI support assistant. " +
+    "You can describe your situation to me in English or Urdu — I am here to guide you safely. " +
+    "Use the quick buttons below or type your situation directly."
+  );
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
+  });
+  chatInput.addEventListener("input", () => {
+    chatInput.style.height = "auto";
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + "px";
+  });
+});
+
+// ── SEND LOGIC ────────────────────────────────────────────────
+function sendChip(btn, text) {
+  chatInput.value = text;
+  handleSend();
+}
+
+async function handleSend() {
+  const text = chatInput.value.trim();
+  if (!text || isThinking) return;
+
+  chatInput.value = "";
+  chatInput.style.height = "auto";
+  appendMessage("user", text);
+  conversationHistory.push({ role: "user", content: text });
+
+  setThinking(true);
+  const thinkingEl = appendThinking();
+
+  try {
+    if (!API_KEY || API_KEY === "PASTE_YOUR_ANTHROPIC_API_KEY_HERE") {
+      // Demo mode — no API key yet
+      await sleep(1200);
+      thinkingEl.remove();
+      appendMessage("assistant",
+        "Demo mode: API key not connected yet. " +
+        "Follow the setup guide to connect Claude AI. " +
+        "For now: if you are in danger, call 1043 (Punjab Women's Helpline) or 15 (Police). " +
+        "For cybercrime: FIA 9911 or NCCIA 1799."
+      );
+    } else {
+      const reply = await callClaude(conversationHistory);
+      thinkingEl.remove();
+      appendMessage("assistant", reply);
+      conversationHistory.push({ role: "assistant", content: reply });
+    }
+  } catch (err) {
+    thinkingEl.remove();
+    appendMessage("assistant",
+      "Sorry, there was a connection issue. " +
+      "If you need urgent help: call 1043 (Punjab Women's Helpline), 1799 (NCCIA), or 9911 (FIA)."
+    );
+    console.error("Claude API error:", err);
+  }
+
+  setThinking(false);
+}
+
+// ── CLAUDE API CALL ───────────────────────────────────────────
+async function callClaude(messages) {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": API_KEY,
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-client-side-key-allowlist": "true"
+    },
+    body: JSON.stringify({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 400,
+      system: SYSTEM_PROMPT,
+      messages: messages.slice(-10) // keep last 10 turns for context
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error?.message || "API error " + response.status);
+  }
+
+  const data = await response.json();
+  return data.content?.[0]?.text || "I could not generate a response. Please try again.";
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────
+function appendMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = `message ${role}`;
+  div.textContent = text;
+  chatWindow.appendChild(div);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  return div;
+}
+
+function appendThinking() {
+  const div = document.createElement("div");
+  div.className = "message thinking";
+  div.innerHTML = `<span class="dots"><span></span><span></span><span></span></span>`;
+  chatWindow.appendChild(div);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  return div;
+}
+
+function setThinking(on) {
+  isThinking = on;
+  sendBtn.disabled = on;
+  chatInput.disabled = on;
+  statusDot.classList.toggle("thinking", on);
+  statusText.textContent = on ? "Thinking…" : "Ready";
+  document.querySelectorAll(".chip").forEach(c => c.disabled = on);
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+
+</body>
+</html>
