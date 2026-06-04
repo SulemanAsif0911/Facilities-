@@ -29,94 +29,248 @@
     </header>
 
     <main id="top">
-      <section class="features-hero" aria-labelledby="hero-title">
-        <div class="container text-center">
-          <p class="hero-kicker">Interactive Safety Suite</p>
-          <h1 id="hero-title">Support Facilities</h1>
-          <p class="hero-subtitle">
-            Prepare complaints anonymously, audit security setups, draft standardized legal correspondence letters, and consult our responsive conversational AI guide tool directly.
+      <section class="features-hero" aria-labelledby="features-title">
+        <div class="features-copy">
+          <p class="eyebrow">More Facilities</p>
+          <h1 id="features-title">Cyber Safety Action Center</h1>
+          <p class="feature-intro">
+            A dedicated page for practical help: anonymous reporting drafts,
+            case follow-up guidance, chatbot-style support, legal rights,
+            Urdu guidance, community programs, and ready-to-use safety tools.
           </p>
-          <div class="feature-hero-actions">
-            <a class="button primary" href="#incident-draft">📝 Incident Draft Maker</a>
-            <a class="button secondary" href="#chatbot">🤖 Live AI Support Chat</a>
+          <div class="feature-hero-actions" aria-label="Feature page shortcuts">
+            <a class="button primary" href="#incident-report">Start Report Draft</a>
+            <a class="button ghost" href="#tools">Open Tools</a>
+          </div>
+        </div>
+
+        <div class="features-console" aria-label="Cyber Hayat PK feature dashboard visual">
+          <div class="console-topbar">
+            <span>Facility Dashboard</span>
+            <span>Live Guide</span>
+          </div>
+          <div class="console-screen">
+            <div class="circuit-visual" aria-hidden="true"></div>
+            <div class="console-stat-grid">
+              <div class="console-stat">
+                <strong>15</strong>
+                <span>Facilities added</span>
+              </div>
+              <div class="console-stat">
+                <strong>04</strong>
+                <span>Interactive tools</span>
+              </div>
+              <div class="console-stat">
+                <strong>02</strong>
+                <span>Languages planned</span>
+              </div>
+              <div class="console-stat">
+                <strong>24/7</strong>
+                <span>Self-help access</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="band light-band" id="incident-draft" aria-labelledby="draft-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Anonymous Document Builder</p>
-            <h2 id="draft-title">Incident Draft Generator</h2>
+      <section class="band" id="facility-index" aria-labelledby="facility-index-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker">Feature Map</p>
+            <h2 id="facility-index-title">Everything Added on This Page</h2>
             <p class="feature-note">
-              Construct details clearly before reporting officially. Information compiles completely on your local client device workspace.
+              These facilities are frontend-ready. Forms save drafts in the browser
+              and generate text outputs until you connect a secure backend.
             </p>
           </div>
+
+          <div class="facility-grid">
+            <article class="facility-card">
+              <span class="feature-icon">01</span>
+              <h3>Anonymous Incident Reporting</h3>
+              <p>Draft a report without collecting names or CNIC on the website.</p>
+              <a href="#incident-report">Open report draft</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">02</span>
+              <h3>Case Tracker</h3>
+              <p>Show victims what usually happens after saving evidence and filing.</p>
+              <a href="#case-tracker">Track next steps</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">03</span>
+              <h3>Guided Chatbot</h3>
+              <p>Choice-based support for blackmail, fake accounts, stalking, and doxing.</p>
+              <a href="#chatbot">Open guide</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">04</span>
+              <h3>Harassment Type Library</h3>
+              <p>Plain examples, law signals, and reporting actions for common cases.</p>
+              <a href="#library">Read library</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">05</span>
+              <h3>Legal Rights Section</h3>
+              <p>PECA-focused guidance with official reference links and safety caveats.</p>
+              <a href="#legal-rights">View rights</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">06</span>
+              <h3>Urdu Language Support</h3>
+              <p>A bilingual quick guide that can expand into a full Urdu site mode.</p>
+              <a href="#urdu-support">Switch language</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">07</span>
+              <h3>Survivor Stories</h3>
+              <p>Anonymous story cards plus a local story draft form.</p>
+              <a href="#community">Share story</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">08</span>
+              <h3>Campus Ambassadors</h3>
+              <p>Student signup draft for campus awareness representation.</p>
+              <a href="#ambassadors">Join program</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">09</span>
+              <h3>Blog and News</h3>
+              <p>Awareness updates, new scam tactics, and active campaign posts.</p>
+              <a href="#news">Read updates</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">10</span>
+              <h3>Evidence Checklist Generator</h3>
+              <p>Select a case type and receive a customized evidence list.</p>
+              <a href="#evidence-tool">Build checklist</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">11</span>
+              <h3>Password and Security Quiz</h3>
+              <p>Check password strength and account safety habits.</p>
+              <a href="#security-tools">Run audit</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">12</span>
+              <h3>Complaint Letter Generator</h3>
+              <p>Create a ready-to-edit complaint letter for official channels.</p>
+              <a href="#letter-tool">Generate letter</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">13</span>
+              <h3>Press Coverage</h3>
+              <p>Slots for verified media mentions, interviews, and campaign coverage.</p>
+              <a href="#trust">View press area</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">14</span>
+              <h3>Partner Organizations</h3>
+              <p>Space for verified NGO, university, legal, or safety partners.</p>
+              <a href="#partners">View partners</a>
+            </article>
+            <article class="facility-card">
+              <span class="feature-icon">15</span>
+              <h3>WhatsApp Community</h3>
+              <p>A WhatsApp sharing path for awareness updates and community growth.</p>
+              <a href="#whatsapp">Open WhatsApp</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band dark-band" id="incident-report" aria-labelledby="report-title">
+        <div class="container feature-two-column">
+          <div>
+            <p class="section-kicker">Private First Step</p>
+            <h2 id="report-title">Anonymous Incident Reporting Form</h2>
+            <p class="feature-note">
+              This creates a private draft on the user’s browser. It does not send
+              information to Cyber Hayat PK, NCCIA, FIA, or any third party until
+              you connect a secure backend and privacy policy.
+            </p>
+          </div>
+
           <div class="tool-panel">
-            <form id="incidentForm" autocomplete="off">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="incidentType">Harassment Type</label>
-                  <select id="incidentType" required>
-                    <option value="Blackmail / Sextortion">Blackmail / Sextortion</option>
-                    <option value="Identity Impersonation">Fake Profile / Impersonation</option>
-                    <option value="Cyber Stalking">Continuous Stalking / Spamming</option>
-                    <option value="Doxing / Data Leak">Doxing (Private Info Leak)</option>
-                    <option value="Online Defamation / Bullying">Cyber Bullying / Defamation</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="incidentPlatform">Platform Involved</label>
-                  <input type="text" id="incidentPlatform" placeholder="e.g. WhatsApp, Instagram, Facebook" required />
-                </div>
+            <form id="incidentForm" class="form-grid">
+              <div class="form-field">
+                <label for="incidentType">Harassment type</label>
+                <select id="incidentType" required>
+                  <option value="">Choose type</option>
+                  <option value="Blackmail or sextortion">Blackmail or sextortion</option>
+                  <option value="Fake account or impersonation">Fake account or impersonation</option>
+                  <option value="Cyber stalking">Cyber stalking</option>
+                  <option value="Doxing or privacy leak">Doxing or privacy leak</option>
+                  <option value="Online bullying or threats">Online bullying or threats</option>
+                  <option value="Hate speech or disinformation">Hate speech or disinformation</option>
+                </select>
               </div>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="incidentDate">Approximate Date Range</label>
-                  <input type="text" id="incidentDate" placeholder="e.g. Early March 2026, Ongoing" required />
-                </div>
-                <div class="form-group">
-                  <label for="incidentContact">Safe Contact Identifier (Optional)</label>
-                  <input type="text" id="incidentContact" placeholder="Secondary email or safe route only" />
-                </div>
+              <div class="form-field">
+                <label for="incidentPlatform">Platform</label>
+                <input id="incidentPlatform" type="text" placeholder="Instagram, WhatsApp, Facebook..." />
               </div>
-              <div class="form-group">
-                <label for="incidentDescription">Detailed Incident Narrative</label>
-                <textarea id="incidentDescription" rows="5" placeholder="Explain what happened safely. Include links, usernames, and chronological order if possible..." required></textarea>
+              <div class="form-field">
+                <label for="incidentDate">Approximate date</label>
+                <input id="incidentDate" type="date" />
               </div>
-              <div class="form-actions-row">
-                <button class="button primary" type="submit">Generate Draft Case</button>
-                <button class="button secondary" type="button" id="exportIncident">💾 Export Draft Document</button>
+              <div class="form-field">
+                <label for="incidentContact">Safe contact optional</label>
+                <input id="incidentContact" type="text" placeholder="Email or phone only if safe" />
+              </div>
+              <div class="form-field full">
+                <label for="incidentDescription">Brief description</label>
+                <textarea id="incidentDescription" required placeholder="Write what happened, usernames, links, and what evidence you already saved."></textarea>
+              </div>
+              <label class="checkbox-row form-field full">
+                <input id="incidentConfirm" type="checkbox" required />
+                <span>I understand this is a private draft, not an official complaint submission.</span>
+              </label>
+              <div class="form-actions form-field full">
+                <button class="button primary" type="submit">Save Anonymous Draft</button>
+                <button class="button ghost" type="button" id="exportIncident">Export Draft</button>
               </div>
             </form>
-            <pre id="incidentResult" class="console-screen" aria-live="polite">Generated structural summaries print here dynamically...</pre>
+            <div id="incidentResult" class="output-box" aria-live="polite">
+              Your draft case ID will appear here after saving.
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="band dark-band" id="case-tracker" aria-labelledby="tracker-title">
+      <section class="band" id="case-tracker" aria-labelledby="tracker-title">
         <div class="container tool-layout">
           <div>
-            <p class="section-kicker">Local Repository Index</p>
-            <h2 id="tracker-title">Local Case Tracker</h2>
+            <p class="section-kicker">After Reporting</p>
+            <h2 id="tracker-title">Case Tracker and Status Updates</h2>
             <p class="feature-note">
-              Input local draft keys (CHPK-...) or inspect standard processing stages recommended for external law enforcement submissions.
+              Use this section to explain the normal path after filing with an
+              official portal: evidence, complaint submission, acknowledgement,
+              review, follow-up, and safety planning.
             </p>
           </div>
+
           <div class="tool-panel">
-            <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;">
-              <input type="text" id="trackerInput" placeholder="Enter Draft Reference Code (e.g., CHPK-2026...)" style="flex:1;padding:0.75rem;border-radius:4px;border:1px solid var(--line);background:var(--bg);color:var(--text);" />
-              <button class="button primary" id="trackButton" style="white-space:nowrap;">Track Case</button>
+            <h3>Track a local draft or official number</h3>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="trackerInput">Case or acknowledgement ID</label>
+                <input id="trackerInput" type="text" placeholder="Example: CHPK-20260521-1234" />
+              </div>
+              <div class="form-field">
+                <label>&nbsp;</label>
+                <button class="button primary" id="trackButton" type="button">Check Status</button>
+              </div>
             </div>
-            <pre id="trackerOutput" class="console-screen" style="min-height:90px;margin-bottom:1.5rem;">Tracking status values render here...</pre>
-            <h4 style="color:var(--cyan);margin-bottom:0.75rem;">Standard Procedure Timeline Steps</h4>
-            <ul class="timeline" id="trackerTimeline">
-              <li>Save evidence safely before blocking or removing accounts.</li>
-              <li>Submit files directly via complaint portals (NCCIA / FIA website).</li>
-              <li>Preserve transactional acknowledgement receipts securely.</li>
-              <li>Perform follow-ups via official helplines when responses stall.</li>
-              <li>Enforce device privacy, change account credentials, and review permissions.</li>
-            </ul>
+            <div id="trackerOutput" class="output-box" aria-live="polite">
+              Enter a local draft ID from this page or an official complaint number.
+            </div>
+            <ol id="trackerTimeline" class="timeline">
+              <li class="is-active">Save evidence before blocking or deleting messages.</li>
+              <li>Submit the complaint through the official NCCIA/FIA portal or office.</li>
+              <li>Keep the acknowledgement number and any email or SMS replies.</li>
+              <li>Follow up with the official office or helpline if there is no response.</li>
+              <li>Update passwords, privacy settings, and trusted contacts.</li>
+            </ol>
           </div>
         </div>
       </section>
@@ -124,219 +278,437 @@
       <section class="band dark-band" id="chatbot" aria-labelledby="chatbot-title">
         <div class="container tool-layout">
           <div>
-            <p class="section-kicker">Live AI Support Desk</p>
-            <h2 id="chatbot-title">AI Guidance Assistant</h2>
+            <p class="section-kicker">Guided Help</p>
+            <h2 id="chatbot-title">AI-Style Support Chatbot</h2>
             <p class="feature-note">
-              Powered by secure Gemini AI infrastructure. Describe scenarios naturally in written Urdu or English.<br />
-              Do not provide absolute legal identifications, real names, or primary credentials.<br />
-              Emergency lines: <a href="tel:1043" style="color:var(--cyan-soft); font-weight:600;">1043</a> (Punjab Women Helpline) or <a href="tel:15" style="color:var(--cyan-soft); font-weight:600;">15</a> (Police).
+              Type your specific question into the chat, or use our quick topics to get 
+              instant visual assistance and security countermeasures.
             </p>
           </div>
+
           <div class="tool-panel">
-            <div id="chatWindow" class="chat-window" role="log" aria-live="polite" aria-label="Chat messages" 
-                 style="display:flex;flex-direction:column;gap:0.9rem;min-height:340px;max-height:420px;overflow-y:auto;scroll-behavior:smooth;padding:1.2rem;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;margin-bottom:1rem;">
+            <div id="chatWindow" class="chat-window" aria-live="polite"></div>
+            <div class="chat-options" aria-label="Chatbot quick choices">
+              <button class="chip-button" type="button" data-chat-topic="blackmail">I am being blackmailed</button>
+              <button class="chip-button" type="button" data-chat-topic="fake">Someone made a fake account</button>
+              <button class="chip-button" type="button" data-chat-topic="stalking">I am being stalked online</button>
+              <button class="chip-button" type="button" data-chat-topic="doxing">My private info was shared</button>
+              <button class="chip-button" type="button" data-chat-topic="urgent">I feel unsafe right now</button>
             </div>
-            <div class="chat-options-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(135px, 1fr));gap:0.5rem;margin-bottom:1rem;">
-              <button class="button secondary text-sm" data-chat-topic="blackmail">🚨 Blackmail / Sextortion</button>
-              <button class="button secondary text-sm" data-chat-topic="fake">👤 Fake Profile Link</button>
-              <button class="button secondary text-sm" data-chat-topic="stalking">📱 Cyber Stalking</button>
-              <button class="button secondary text-sm" data-chat-topic="doxing">🔒 Private Info Leak</button>
-              <button class="button secondary text-sm" data-chat-topic="urgent">📞 Contact Helplines</button>
-            </div>
-            <form id="chatForm" style="display:flex;gap:0.5rem;align-items:stretch;" autocomplete="off">
-              <input type="text" id="chatInput" placeholder="Type here in Urdu or English (e.g., Someone created a fake account...)" required 
-                     style="flex:1;padding:0.75rem 1rem;background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:4px;font-size:14px;" />
-              <button type="submit" id="sendBtn" class="button primary" style="padding:0 1.5rem;white-space:nowrap;">Send</button>
+            <form id="chatForm" class="chat-input-container">
+              <input id="chatInput" type="text" placeholder="Ask a question or describe what happened..." required autocomplete="off" />
+              <button class="button primary" type="submit">Send</button>
             </form>
-            <p id="chatStatus" style="font-size:12px;color:var(--muted);margin-top:6px;min-height:16px;margin-bottom:0; font-family:monospace;"></p>
           </div>
         </div>
       </section>
 
-      <section class="band light-band" id="evidence-toolkit" aria-labelledby="evidence-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Verification Assets</p>
-            <h2 id="evidence-title">Evidence Checklist Builder</h2>
-            <p class="feature-note">
-              Isolate and bundle foundational verification files systematically according to classification guidelines before tracking legal routes.
-            </p>
-          </div>
-          <div class="tool-panel">
-            <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;">
-              <select id="evidenceType" style="flex:1;padding:0.75rem;border-radius:4px;border:1px solid var(--line);background:var(--bg);color:var(--text);">
-                <option value="stalking">Stalking / Cyber Harassment Metrics</option>
-                <option value="sextortion">Blackmail / Sextortion Traces</option>
-                <option value="impersonation">Identity Spoofing / Impersonation Items</option>
-                <option value="doxing">Doxing Data Elements</option>
-                <option value="bullying">Coordinated Defamation / Bullying Blocks</option>
-              </select>
-              <button class="button primary" id="buildChecklist" style="white-space:nowrap;">Generate List</button>
-            </div>
-            <div id="checklistOutput"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="band dark-band" id="credential-strength" aria-labelledby="meter-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Defensive Sanitization Check</p>
-            <h2 id="meter-title">Password Audit Shield</h2>
-            <p class="feature-note">
-              Analyze credential complexities entirely inside your browser execution engine layers. No data strings exit the client machine parameters.
-            </p>
-          </div>
-          <div class="tool-panel">
-            <div class="form-group">
-              <label for="passwordInput">Evaluate Passphrase Candidate</label>
-              <input type="text" id="passwordInput" placeholder="Type checking sequence string variations here..." />
-            </div>
-            <div class="password-meter-container" style="margin-top:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.05);height:6px;border-radius:3px;overflow:hidden;position:relative;">
-              <div id="passwordMeter" style="--meter-width:0%; --meter-color:var(--red); width:var(--meter-width); background:var(--meter-color); height:100%; transition:width 0.25s ease, background 0.25s ease;"></div>
-            </div>
-            <p id="passwordFeedback" style="font-size:0.875rem;color:var(--muted);line-height:1.5;">
-              Credential metrics report criteria indicators here upon sequence string mutation parsing updates...
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="band light-band" id="safety-audit" aria-labelledby="audit-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Operational Risk Matrix</p>
-            <h2 id="audit-title">Privacy Hygiene Evaluation</h2>
-            <p class="feature-note">
-              Self-evaluate privacy posture across defensive habit vectors to map configuration vulnerabilities.
-            </p>
-          </div>
-          <div class="tool-panel">
-            <form id="auditForm">
-              <div style="display:flex;flex-direction:column;gap:0.75rem;">
-                <label class="checkbox-row"><input type="checkbox" /> Multi-Factor Authentication (MFA/2FA) is turned on across all email and message setups.</label>
-                <label class="checkbox-row"><input type="checkbox" /> Social profile lookup visibilities are locked down tightly exclusively to verified contacts.</label>
-                <label class="checkbox-row"><input type="checkbox" /> Connected platform integration authorization rules are routinely audited and cleared.</label>
-                <label class="checkbox-row"><input type="checkbox" /> Active lock screens and robust authentication patterns are configured on all endpoint devices.</label>
-                <label class="checkbox-row"><input type="checkbox" /> Public network endpoints are avoided, or access is routed over encrypted tunnels.</label>
-              </div>
-            </form>
-            <div id="auditResult" style="margin-top:1.5rem;padding:1rem;background:var(--bg-2);border:1px solid var(--line);border-radius:4px;color:var(--cyan-soft);font-weight:600;font-family:monospace;">
-              Awaiting selection parameters...
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="band dark-band" id="complaint-generator" aria-labelledby="letter-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Standard Documentation Script</p>
-            <h2 id="letter-title">Legal Application Builder</h2>
-            <p class="feature-note">
-              Structure descriptive complaint applications designed for submission to formal reporting authorities like the FIA Cybercrime Wing or NCCIA.
-            </p>
-          </div>
-          <div class="tool-panel">
-            <form id="letterForm">
-              <div class="form-grid">
-                <div class="form-group"><label for="letterName">Applicant Name alias</label><input type="text" id="letterName" placeholder="e.g. Resident / Citizen alias" /></div>
-                <div class="form-group"><label for="letterCity">City Coordinates</label><input type="text" id="letterCity" placeholder="e.g. Lahore, Karachi" /></div>
-              </div>
-              <div class="form-grid">
-                <div class="form-group"><label for="letterType">Classification</label><input type="text" id="letterType" placeholder="e.g. Blackmail, Impersonation" /></div>
-                <div class="form-group"><label for="letterPlatform">Target Network URL</label><input type="text" id="letterPlatform" placeholder="e.g. Facebook, Instagram" /></div>
-              </div>
-              <div class="form-grid">
-                <div class="form-group"><label for="letterAccused">Accused Identifier Handles</label><input type="text" id="letterAccused" placeholder="e.g. Mobile number, exact link profile URL" /></div>
-                <div class="form-group"><label for="letterDate">Occurrence Timeline</label><input type="text" id="letterDate" placeholder="e.g. February 24, 2026" /></div>
-              </div>
-              <div class="form-group"><label for="letterSummary">Narrative Overview</label><textarea id="letterSummary" rows="3" placeholder="State situational facts briefly and directly..."></textarea></div>
-              <div class="form-group"><label for="letterEvidence">Catalogued Proof Assets</label><textarea id="letterEvidence" rows="3" placeholder="Itemize supporting verification captures (e.g., WhatsApp logs, URL screenshots)..."></textarea></div>
-              <div class="form-actions-row">
-                <button class="button primary" type="submit">Compile Document View</button>
-                <button class="button secondary" type="button" id="downloadLetter">💾 Download Application File</button>
-              </div>
-            </form>
-            <pre id="letterPreview" class="console-screen" style="white-space:pre-wrap;">Compiled legal applications preview layout structures here...</pre>
-          </div>
-        </div>
-      </section>
-
-      <section class="band light-band" id="community-stories" aria-labelledby="stories-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Shared Empirical Insights</p>
-            <h2 id="stories-title">Anonymous Survivor Log</h2>
-            <p class="feature-note">
-              Share how you resolved threats to help empower others. Submissions undergo manual review and formatting sanitization loops before publication.
-            </p>
-          </div>
-          <div class="tool-panel">
-            <form id="storyForm">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="storyTheme">Harassment Vector Theme</label>
-                  <input type="text" id="storyTheme" placeholder="e.g., Recovery from Fake Profile Blackmail" required />
-                </div>
-                <div class="form-group">
-                  <label for="storyOutcome">Resolution Pathway Strategy</label>
-                  <input type="text" id="storyOutcome" placeholder="e.g., Resolution via Platform Reporting & FIA Assistance" required />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="storyText">Anonymized Narrative Log</label>
-                <textarea id="storyText" rows="4" placeholder="Detail the steps taken to resolve the issue. Keep details generalized for safety. Do not include your real name or personal information..." required></textarea>
-              </div>
-              <button class="button primary" type="submit">Transmit Anonymized Story</button>
-            </form>
-            <p id="storyResult" style="margin-top:1rem;font-weight:600;font-size:14px;color:var(--cyan-soft);min-height:20px;"></p>
-          </div>
-        </div>
-      </section>
-
-      <section class="band dark-band" id="campus-program" aria-labelledby="ambassador-title">
-        <div class="container tool-layout">
-          <div>
-            <p class="section-kicker">Expansion Advocacy Links</p>
-            <h2 id="ambassador-title">Campus Ambassador Portal</h2>
-            <p class="feature-note">
-              Lead the digital safety movement at your university. Help organize safe workshops, distribute resources, and guide peers securely.
-            </p>
-          </div>
-          <div class="tool-panel">
-            <form id="ambassadorForm">
-              <div class="form-grid">
-                <div class="form-group"><label for="ambassadorName">Full Name / Pseudonym</label><input type="text" id="ambassadorName" placeholder="Applicant moniker" required /></div>
-                <div class="form-group"><label for="ambassadorCampus">Institution Affiliation</label><input type="text" id="ambassadorCampus" placeholder="e.g. UET Lahore, UCP, FAST" required /></div>
-              </div>
-              <div class="form-grid">
-                <div class="form-group"><label for="ambassadorCity">City Location</label><input type="text" id="ambassadorCity" placeholder="e.g. Lahore, Faisalabad" required /></div>
-                <div class="form-group"><label for="ambassadorContact">Secure Contact Channel</label><input type="text" id="ambassadorContact" placeholder="Secure email address or coordinate" required /></div>
-              </div>
-              <div class="form-group">
-                <label for="ambassadorWhy">Advocacy Vision and Objectives</label>
-                <textarea id="ambassadorWhy" rows="3" placeholder="Briefly state your ideas for raising cyber harassment awareness on your campus..." required></textarea>
-              </div>
-              <button class="button primary" type="submit">Submit Application File</button>
-            </form>
-            <p id="ambassadorResult" style="margin-top:1rem;font-weight:600;font-size:14px;color:var(--cyan-soft);min-height:20px;white-space:pre-wrap;"></p>
-          </div>
-        </div>
-      </section>
-
-      <section class="band light-band" id="broadcast-feed" aria-labelledby="broadcast-title">
+      <section class="band" id="library" aria-labelledby="library-title">
         <div class="container">
-          <div class="text-center" style="max-width:600px;margin:0 auto 3rem auto;">
-            <p class="section-kicker">Information Pipelines</p>
-            <h2 id="broadcast-title">Community Broadcast Outlets</h2>
-            <p>Access distributed resources, keep tracking community announcements, and stay updated on active digital safety standards across Pakistan.</p>
+          <div class="section-heading">
+            <p class="section-kicker">Content Library</p>
+            <h2 id="library-title">Harassment Type Library</h2>
+            <p class="feature-note">
+              Short, practical explainers for the incidents Pakistani students
+              and families most often need to understand quickly.
+            </p>
           </div>
+
+          <div class="library-grid">
+            <article class="harassment-card">
+              <h3>Cyber Stalking</h3>
+              <p>Repeated monitoring, unwanted messages, threats, or tracking across accounts.</p>
+              <ul>
+                <li>Save usernames, links, timestamps, and screenshots.</li>
+                <li>Record repeated contact patterns before blocking.</li>
+                <li>PECA may treat repeated online surveillance or unwanted contact as cyber stalking.</li>
+              </ul>
+            </article>
+            <article class="harassment-card">
+              <h3>Doxing</h3>
+              <p>Sharing private phone numbers, addresses, photos, or family details to intimidate someone.</p>
+              <ul>
+                <li>Capture the public post, comments, and share links.</li>
+                <li>Ask trusted people not to engage with the post.</li>
+                <li>Report to the platform and official channels if safety is at risk.</li>
+              </ul>
+            </article>
+            <article class="harassment-card">
+              <h3>Sextortion</h3>
+              <p>Threatening to share private or intimate content to force money, silence, or more content.</p>
+              <ul>
+                <li>Do not pay or send more material.</li>
+                <li>Save threats, payment demands, accounts, and phone numbers.</li>
+                <li>Use official complaint channels and contact a trusted person immediately.</li>
+              </ul>
+            </article>
+            <article class="harassment-card">
+              <h3>Impersonation</h3>
+              <p>Fake accounts using someone’s name, photos, school, workplace, or identity details.</p>
+              <ul>
+                <li>Copy the profile URL and screenshot the profile and messages.</li>
+                <li>Report the fake account inside the platform.</li>
+                <li>Identity misuse can be relevant under PECA provisions on identity information.</li>
+              </ul>
+            </article>
+            <article class="harassment-card">
+              <h3>Hate Speech</h3>
+              <p>Targeted abuse based on religion, gender, ethnicity, disability, or identity.</p>
+              <ul>
+                <li>Save the original post and surrounding context.</li>
+                <li>Report content that incites harm or coordinated abuse.</li>
+                <li>Escalate urgent threats to police or official cybercrime channels.</li>
+              </ul>
+            </article>
+            <article class="harassment-card">
+              <h3>Disinformation</h3>
+              <p>False claims, edited media, or smear posts designed to damage reputation.</p>
+              <ul>
+                <li>Save the original post before it is deleted or edited.</li>
+                <li>Collect proof showing the claim is false.</li>
+                <li>Avoid public arguments that may spread the content further.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band dark-band" id="legal-rights" aria-labelledby="rights-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker">Know Your Rights</p>
+            <h2 id="rights-title">Legal Rights and Urdu Support</h2>
+            <p class="feature-note">
+              This is awareness information, not legal advice. Cyber laws can be
+              amended, so users should verify details with official sources,
+              lawyers, or rights organizations before relying on penalties.
+            </p>
+          </div>
+
+          <div class="rights-grid">
+            <article class="rights-card">
+              <h3>PECA 2016 in Simple Words</h3>
+              <p>
+                Pakistan’s Prevention of Electronic Crimes Act covers several
+                electronic offences, including misuse of identity information,
+                privacy/modesty harms, cyber stalking, spoofing, and other
+                computer-related offences.
+              </p>
+              <ul>
+                <li>Relevant sections can depend on facts and evidence.</li>
+                <li>Punishments may include fines and imprisonment.</li>
+                <li>Serious threats, intimate-image abuse, minors, or physical danger need urgent support.</li>
+              </ul>
+            </article>
+            <article class="rights-card">
+              <h3>Official References</h3>
+              <p>
+                Link users to official material instead of copying long legal
+                text into the page.
+              </p>
+              <ul>
+                <li><a href="https://pcsw.punjab.gov.pk/prevention-of-electronic-crimes-act-2016" target="_blank" rel="noopener noreferrer">PCSW PECA overview</a></li>
+                <li><a href="https://www.pakistancode.gov.pk/pdffiles/administrator6a061efe0ed5bd153fa8b79b8eb4cba7.pdf" target="_blank" rel="noopener noreferrer">Pakistan Code PECA PDF</a></li>
+                <li><a href="https://complaint.nccia.gov.pk/" target="_blank" rel="noopener noreferrer">NCCIA complaint portal</a></li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="legal-disclaimer">
+            If someone is in immediate physical danger, they should contact local
+            emergency services or a trusted nearby adult/person first. A website
+            guide should support safety decisions, not delay urgent help.
+          </div>
+
+          <div class="language-panel" id="urdu-support">
+            <p class="section-kicker">Urdu Language Support</p>
+            <h3>Quick Safety Guide</h3>
+            <div class="language-actions">
+              <button class="lang-button is-active" type="button" data-language="en">English</button>
+              <button class="lang-button" type="button" data-language="ur">Urdu</button>
+            </div>
+            <div class="lang-en">
+              <p>
+                Save screenshots, links, usernames, dates, and phone numbers.
+                Do not delete chats before documenting them. Change passwords,
+                enable two factor authentication, and report through official
+                channels when safe.
+              </p>
+            </div>
+            <div class="lang-ur" lang="ur">
+              <p>
+                فوراً اسکرین شاٹس، لنکس، یوزر نیم، تاریخیں اور فون نمبرز محفوظ کریں۔
+                ثبوت محفوظ کرنے سے پہلے چیٹس ڈیلیٹ نہ کریں۔ پاس ورڈ تبدیل کریں،
+                دو مرحلوں والی سکیورٹی آن کریں، اور جب محفوظ ہو تو سرکاری چینلز
+                کے ذریعے رپورٹ کریں۔
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="community" aria-labelledby="community-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker">Community Features</p>
+            <h2 id="community-title">Stories, Ambassadors, and Updates</h2>
+          </div>
+
+          <div class="community-grid">
+            <article class="story-card">
+              <span class="story-meta">Anonymous Story</span>
+              <h3>“I told one trusted friend first.”</h3>
+              <p>
+                A student saved screenshots, locked her profile, and asked a
+                trusted classmate to stay with her while she reported the account.
+              </p>
+            </article>
+            <article class="story-card">
+              <span class="story-meta">Anonymous Story</span>
+              <h3>“The fake account came down.”</h3>
+              <p>
+                After collecting links and profile screenshots, the victim filed
+                platform reports and kept the official complaint number for follow-up.
+              </p>
+            </article>
+            <article class="tool-panel">
+              <h3>Share an Anonymous Story</h3>
+              <form id="storyForm" class="form-grid">
+                <div class="form-field">
+                  <label for="storyTheme">Theme</label>
+                  <input id="storyTheme" type="text" placeholder="Example: fake account" />
+                </div>
+                <div class="form-field">
+                  <label for="storyOutcome">Outcome</label>
+                  <input id="storyOutcome" type="text" placeholder="Example: reported safely" />
+                </div>
+                <div class="form-field full">
+                  <label for="storyText">Story draft</label>
+                  <textarea id="storyText" placeholder="Keep it anonymous. Remove names, phone numbers, usernames, and locations."></textarea>
+                </div>
+                <div class="form-field full">
+                  <button class="button primary" type="submit">Add Story Draft</button>
+                </div>
+              </form>
+              <div id="storyResult" class="output-box" aria-live="polite">Story drafts appear here locally.</div>
+            </article>
+          </div>
+
+          <div class="feature-two-column tool-panel" id="ambassadors">
+            <div>
+              <p class="section-kicker">Campus Program</p>
+              <h3>Campus Ambassador Signup</h3>
+              <p>
+                Use this form to collect student interest once you connect a
+                secure form service. It is useful for workshops, awareness booths,
+                hostel sessions, and reporting guidance circles.
+              </p>
+            </div>
+            <form id="ambassadorForm" class="form-grid">
+              <div class="form-field">
+                <label for="ambassadorName">Name</label>
+                <input id="ambassadorName" type="text" placeholder="Student name" />
+              </div>
+              <div class="form-field">
+                <label for="ambassadorCampus">University or college</label>
+                <input id="ambassadorCampus" type="text" placeholder="Campus name" />
+              </div>
+              <div class="form-field">
+                <label for="ambassadorCity">City</label>
+                <input id="ambassadorCity" type="text" placeholder="City" />
+              </div>
+              <div class="form-field">
+                <label for="ambassadorContact">Contact (Email or WhatsApp)</label>
+                <input id="ambassadorContact" type="text" placeholder="Email or WhatsApp number" />
+              </div>
+              <div class="form-field full">
+                <label for="ambassadorWhy">Why do you want to join?</label>
+                <textarea id="ambassadorWhy" placeholder="Briefly tell us why you want to be a campus ambassador for Cyber Hayat PK."></textarea>
+              </div>
+              <div class="form-field full">
+                <button class="button primary" type="submit">Apply as Ambassador</button>
+              </div>
+              <div id="ambassadorResult" class="output-box form-field full" aria-live="polite">
+                Ambassador signup drafts appear here.
+              </div>
+            </form>
+          </div>
+
+          <div id="news">
+            <div class="section-heading">
+              <p class="section-kicker">Blog and News</p>
+              <h2>Awareness Updates</h2>
+            </div>
+            <div class="post-grid">
+              <article class="post-card">
+                <span class="post-meta">Safety Tip</span>
+                <h3>Before you block, document.</h3>
+                <p>Blocking is important, but first save links, screenshots, dates, and account identifiers.</p>
+              </article>
+              <article class="post-card">
+                <span class="post-meta">Campus Guide</span>
+                <h3>Run a 20-minute cyber safety session.</h3>
+                <p>Start with privacy settings, evidence saving, trusted contacts, and official support links.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band dark-band" id="tools" aria-labelledby="tools-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker">Utility Tools</p>
+            <h2 id="tools-title">Evidence, Security, and Complaint Tools</h2>
+          </div>
+
+          <div class="tool-layout" id="evidence-tool">
+            <div>
+              <p class="section-kicker">Checklist Generator</p>
+              <h3>Evidence Checklist</h3>
+              <p class="feature-note">
+                Select the harassment type to create a focused evidence-saving list.
+              </p>
+            </div>
+            <div class="tool-panel">
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="evidenceType">Case type</label>
+                  <select id="evidenceType">
+                    <option value="stalking">Cyber stalking</option>
+                    <option value="sextortion">Blackmail or sextortion</option>
+                    <option value="impersonation">Fake account or impersonation</option>
+                    <option value="doxing">Doxing or privacy leak</option>
+                    <option value="bullying">Online bullying or threats</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>&nbsp;</label>
+                  <button class="button primary" id="buildChecklist" type="button">Build Checklist</button>
+                </div>
+              </div>
+              <div id="checklistOutput" class="output-box" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="tool-layout" id="security-tools">
+            <div>
+              <p class="section-kicker">Security Audit</p>
+              <h3>Password Strength and Safety Quiz</h3>
+              <p class="feature-note">
+                A quick tool for account hygiene. No password is sent anywhere.
+              </p>
+            </div>
+            <div class="tool-panel">
+              <div class="form-field">
+                <label for="passwordInput">Test password strength</label>
+                <input id="passwordInput" type="password" placeholder="Type a sample password" autocomplete="new-password" />
+              </div>
+              <div class="meter" aria-hidden="true">
+                <div id="passwordMeter" class="meter-fill"></div>
+              </div>
+              <div id="passwordFeedback" class="output-box" aria-live="polite">
+                Password feedback will appear here.
+              </div>
+
+              <form id="auditForm" class="audit-list">
+                <label class="audit-item">
+                  <input type="checkbox" value="2fa" />
+                  <span>I use two factor authentication on important accounts.</span>
+                </label>
+                <label class="audit-item">
+                  <input type="checkbox" value="unique" />
+                  <span>My email, Instagram, and banking passwords are different.</span>
+                </label>
+                <label class="audit-item">
+                  <input type="checkbox" value="privacy" />
+                  <span>I reviewed privacy settings and who can message/tag me.</span>
+                </label>
+                <label class="audit-item">
+                  <input type="checkbox" value="recovery" />
+                  <span>My recovery email and phone number are current and safe.</span>
+                </label>
+              </form>
+              <div id="auditResult" class="output-box" aria-live="polite">Security audit score will appear here.</div>
+            </div>
+          </div>
+
+          <div class="tool-layout" id="letter-tool">
+            <div>
+              <p class="section-kicker">Template Generator</p>
+              <h3>Complaint Letter Template</h3>
+              <p class="feature-note">
+                Generate a structured letter that the user can review, correct,
+                and attach to an official complaint.
+              </p>
+            </div>
+            <div class="tool-panel">
+              <form id="letterForm" class="form-grid">
+                <div class="form-field">
+                  <label for="letterName">Name</label>
+                  <input id="letterName" type="text" placeholder="Your name" />
+                </div>
+                <div class="form-field">
+                  <label for="letterCity">City</label>
+                  <input id="letterCity" type="text" placeholder="City" />
+                </div>
+                <div class="form-field">
+                  <label for="letterType">Incident type</label>
+                  <input id="letterType" type="text" placeholder="Example: fake account" />
+                </div>
+                <div class="form-field">
+                  <label for="letterPlatform">Platform</label>
+                  <input id="letterPlatform" type="text" placeholder="Instagram, WhatsApp..." />
+                </div>
+                <div class="form-field">
+                  <label for="letterAccused">Account or number involved</label>
+                  <input id="letterAccused" type="text" placeholder="@username or phone number" />
+                </div>
+                <div class="form-field">
+                  <label for="letterDate">Incident date</label>
+                  <input id="letterDate" type="date" />
+                </div>
+                <div class="form-field full">
+                  <label for="letterSummary">Summary</label>
+                  <textarea id="letterSummary" placeholder="Briefly explain what happened and what action you request."></textarea>
+                </div>
+                <div class="form-field full">
+                  <label for="letterEvidence">Evidence list</label>
+                  <textarea id="letterEvidence" placeholder="Screenshots, URLs, account links, phone numbers, dates, emails..."></textarea>
+                </div>
+                <div class="form-actions form-field full">
+                  <button class="button primary" type="submit">Generate Letter</button>
+                  <button class="button ghost" type="button" id="downloadLetter">Download Letter</button>
+                </div>
+              </form>
+              <div id="letterPreview" class="output-box letter-preview" aria-live="polite">
+                Your complaint letter preview will appear here.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="trust" aria-labelledby="trust-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-kicker">Outreach and Trust</p>
+            <h2 id="trust-title">Press, Partners, and WhatsApp Community</h2>
+            <p class="feature-note">
+              Keep this section honest: publish only verified press coverage and
+              confirmed partners.
+            </p>
+          </div>
+
           <div class="trust-grid">
+            <article class="trust-card">
+              <span class="trust-meta">Press Coverage</span>
+              <h3>Media Section</h3>
+              <p>Add verified interviews, university features, podcast links, or news articles here.</p>
+            </article>
             <article class="trust-card" id="partners">
-              <span class="trust-meta">Network Connections</span>
-              <h3>Collaborating Networks</h3>
-              <p>We work alongside student communities, voluntary groups, and legal advocates across Pakistan to share awareness resources.</p>
+              <span class="trust-meta">Partners</span>
+              <h3>Verified Partner Slots</h3>
               <ul class="partner-list">
                 <li>University societies</li>
                 <li>Legal aid volunteers</li>
