@@ -2,9 +2,11 @@
 // CYBER HAYAT PK — script.js
 // STEP 1: Deploy your Google Apps Script (see SETUP_GUIDE.md)
 // STEP 2: Paste your Web App URL below
+// STEP 3: Live Cloudflare Worker proxy handle activated below
 // ============================================================
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx78KYP8R0mJn_5mbDV3pFkRXAdNrZPf7JketERTH4IG68t5-WxLWLg66eeH9pQK7kG/exec";
+const CLOUDFLARE_WORKER_URL = "https://cyberhayat-bot.suli901asif.workers.dev/";
 
 // ─────────────────────────────────────────────────────────────
 (() => {
@@ -248,15 +250,69 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx78KYP8R0mJn
     chatWindow.scrollTop = chatWindow.scrollHeight;
   };
 
+  // Local Conversational Engine (Serves as instant network fallback)
+  const getFallbackResponse = (userText) => {
+    const cleanText = userText.toLowerCase();
+    if (cleanText.includes("blackmail") || cleanText.includes("money") || cleanText.includes("extort") || cleanText.includes("pay")) {
+      return chatResponses.blackmail;
+    } else if (cleanText.includes("fake") || cleanText.includes("impersonat") || cleanText.includes("identity") || cleanText.includes("profile")) {
+      return chatResponses.fake;
+    } else if (cleanText.includes("stalk") || cleanText.includes("harass") || cleanText.includes("message") || cleanText.includes("call")) {
+      return chatResponses.stalking;
+    } else if (cleanText.includes("dox") || cleanText.includes("leak") || cleanText.includes("number") || cleanText.includes("photo") || cleanText.includes("cnic")) {
+      return chatResponses.doxing;
+    } else if (cleanText.includes("urgent") || cleanText.includes("danger") || cleanText.includes("unsafe") || cleanText.includes("threat")) {
+      return chatResponses.urgent;
+    } else if (cleanText.includes("peca") || cleanText.includes("law") || cleanText.includes("legal") || cleanText.includes("crime") || cleanText.includes("punish")) {
+      return "Under the Prevention of Electronic Crimes Act (PECA 2016), actions like identity misuse, stalking, and privacy breaches carry severe penalties. Look at the 'Know Your Rights' matrix down below to check verified links.";
+    } else if (cleanText.includes("fia") || cleanText.includes("nccia") || cleanText.includes("portal") || cleanText.includes("complain")) {
+      return "Formal cases can be reported directly online via complaint.nccia.gov.pk or complaint.fia.gov.pk. Use the Complaint Letter tool below to compile your case record framework first.";
+    }
+    return "I process details privately here to ensure safety. To obtain structural assistance, utilize the interactive 'Evidence Checklist' or 'Letter Template Generator' configurations below. Always screenshot threats immediately before blocking accounts.";
+  };
+
+  // Streamed execution layer interfacing with Cloudflare Workers backend
+  async function requestAIResponse(userMessage) {
+    if (!CLOUDFLARE_WORKER_URL) {
+      appendChatMessage("assistant", getFallbackResponse(userMessage));
+      return;
+    }
+
+    try {
+      const response = await fetch(CLOUDFLARE_WORKER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          messages: [
+            { role: "user", parts: [{ text: userMessage }] }
+          ],
+          systemPrompt: "You are an empathetic, expert live AI safety assistant for Cyber Hayat PK, an organization dedicated to combatting cyber harassment and digital abuse in Pakistan. Provide clear, practical, protective advice to victims of online harassment, blackmail, identity theft, or stalking. Keep responses supportive, concise, and focused on immediate security steps (saving evidence, reporting to FIA at complaint.fia.gov.pk or NCCIA at complaint.nccia.gov.pk, or calling helplines like DRF at 0800-39393). Support both English and Urdu text contextually."
+        })
+      });
+
+      const data = await response.json();
+
+      if (data && data.reply) {
+        appendChatMessage("assistant", data.reply);
+      } else {
+        appendChatMessage("assistant", getFallbackResponse(userMessage));
+      }
+    } catch (error) {
+      console.warn("AI proxy unreachable, applying contextual emergency fallback safety framework:", error);
+      appendChatMessage("assistant", getFallbackResponse(userMessage));
+    }
+  }
+
   if (chatWindow) {
-    chatWindow.innerHTML = `<div class="message assistant">👋 Assalam o Alaikum. I am your active security guide. Type your question directly below, or pick a rapid choice badge!</div>`;
+    chatWindow.innerHTML = `<div class="message assistant">👋 Assalam o Alaikum. I am your active live AI safety assistant. Type your question directly below, or pick a rapid choice badge!</div>`;
     
     chatOptions.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const topic = btn.dataset.chatTopic;
-        const response = chatResponses[topic] || "Please select a response option.";
-        appendChatMessage("user", btn.textContent);
-        window.setTimeout(() => appendChatMessage("assistant", response), 300);
+        const topicText = btn.textContent;
+        appendChatMessage("user", topicText);
+        requestAIResponse(topicText);
       });
     });
   }
@@ -270,27 +326,7 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx78KYP8R0mJn
       appendChatMessage("user", userText);
       chatInput.value = "";
 
-      // Conversational Matching Engine
-      let botResponse = "I process details privately here. To get precise help, utilize the interactive 'Evidence Checklist' or 'Letter Template Generator' items lower on this safety screen. Always screenshot threats immediately before blocking accounts.";
-      const cleanText = userText.toLowerCase();
-
-      if (cleanText.includes("blackmail") || cleanText.includes("money") || cleanText.includes("extort") || cleanText.includes("pay")) {
-        botResponse = chatResponses.blackmail;
-      } else if (cleanText.includes("fake") || cleanText.includes("impersonat") || cleanText.includes("identity") || cleanText.includes("profile")) {
-        botResponse = chatResponses.fake;
-      } else if (cleanText.includes("stalk") || cleanText.includes("harass") || cleanText.includes("message") || cleanText.includes("call")) {
-        botResponse = chatResponses.stalking;
-      } else if (cleanText.includes("dox") || cleanText.includes("leak") || cleanText.includes("number") || cleanText.includes("photo") || cleanText.includes("cnic")) {
-        botResponse = chatResponses.doxing;
-      } else if (cleanText.includes("urgent") || cleanText.includes("danger") || cleanText.includes("unsafe") || cleanText.includes("threat")) {
-        botResponse = chatResponses.urgent;
-      } else if (cleanText.includes("peca") || cleanText.includes("law") || cleanText.includes("legal") || cleanText.includes("crime") || cleanText.includes("punish")) {
-        botResponse = "Under the Prevention of Electronic Crimes Act (PECA 2016), actions like identity misuse, stalking, and privacy breaches carry severe penalties. Look at the 'Know Your Rights' matrix down below to check verified links.";
-      } else if (cleanText.includes("fia") || cleanText.includes("nccia") || cleanText.includes("portal") || cleanText.includes("complain")) {
-        botResponse = "Formal cases can be reported directly online via complaint.nccia.gov.pk or complaint.fia.gov.pk. Use the Complaint Letter tool below to compile your case record framework first.";
-      }
-
-      window.setTimeout(() => appendChatMessage("assistant", botResponse), 450);
+      requestAIResponse(userText);
     });
   }
 
